@@ -1,0 +1,31 @@
+// For reference, this was the input in python:
+//     text = "Chris Manning is a nice person. Chris wrote a simple sentence. He also gives oranges to people."
+// with CoreNLPClient(
+//         annotators=['openie'],
+//         timeout=30000,
+//         memory='6G',
+//         endpoint="http://localhost:8008") as client:
+//     ann = client.annotate(text)
+// 
+// 
+
+//
+// An OpenIE relation triple.
+// Created by the openie annotator.
+//
+//This is from the stanza coreNLP.proto file: https://github.com/stanfordnlp/stanza/blob/main/doc/CoreNLP.proto
+//
+message RelationTriple {
+    optional string          subject        = 1;   // The surface form of the subject
+    optional string          relation       = 2;   // The surface form of the relation (required)
+    optional string          object         = 3;   // The surface form of the object
+    optional double          confidence     = 4;   // The [optional] confidence of the extraction
+    repeated TokenLocation   subjectTokens  = 13; // The tokens comprising the subject of the triple
+    repeated TokenLocation   relationTokens = 14; // The tokens comprising the relation of the triple
+    repeated TokenLocation   objectTokens   = 15; // The tokens comprising the object of the triple
+    optional DependencyGraph tree           = 8;   // The dependency graph fragment for this triple
+    optional bool            istmod         = 9;   // If true, this expresses an implicit tmod relation
+    optional bool            prefixBe       = 10;  // If true, this relation string is missing a 'be' prefix
+    optional bool            suffixBe       = 11;  // If true, this relation string is missing a 'be' suffix
+    optional bool            suffixOf       = 12;  // If true, this relation string is missing a 'of' prefix
+  }

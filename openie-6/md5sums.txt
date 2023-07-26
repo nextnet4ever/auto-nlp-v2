@@ -1,1 +1,1 @@
-85529bf80f5afae6fac533f38192c271  openie6_models.tar.gz
+176a5eb2f6fe375f1d99094efad5fca8  openie6_data.tar.gz

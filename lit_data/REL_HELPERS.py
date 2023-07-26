@@ -7,10 +7,11 @@ import re
 import threading
 from func_timeout import func_timeout, FunctionTimedOut
 import traceback
+import os
 
-from pyopenie import OpenIE5
+#from pyopenie import OpenIE5
 #extractor = OpenIE5('http://localhost:9000')
-extractors = [OpenIE5('http://localhost:8000'), OpenIE5('http://localhost:9000')]
+#extractors = [OpenIE5('http://localhost:8000'), OpenIE5('http://localhost:9000')]
 
 import nltk.data
 tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
@@ -114,13 +115,23 @@ total_rows = []
 
 # New implementation using Stanza/CoreNLP
 
-def HELPER_to_extract(sent, row, core_NLP_client):# = extractors):# None):
+def HELPER_to_extract(sent, row):# = extractors):# None):
+
+    print('Extractor called')
     # global total_arash
     # global total_rows
     total_rows = []
     arash = [] # naming one var arash so the legacy lives on...
     try:
-        results = core_NLP_client.annotate(sent)
+        #results = core_NLP_client.annotate(sent)
+        #results = extractor.extract(sent)
+        # New implementation using OpenIE6
+    
+        # Call OpenIE6 on our saved files
+        os.chdir("openie-6")
+        os.system(f'conda activate openie6')
+        os.system(f'python run.py --save models/oie_model --mode predict --model_str bert-base-cased --task oie --gpus 0 --inp /home/derek/auto-nlp/auto-nlp-drive/text/nihms-1536901.txt --out /home/derek/auto-nlp/auto-nlp-drive/text/predictions.txt')
+        
         for res in results:
             for arg2 in res["extraction"]["arg2s"]:
                 arash.append([res["extraction"]["arg1"]["text"], \
@@ -186,7 +197,7 @@ def OPTION1(df = None):
                 try:
 
                     # Here is where the money is made. This is the function that does the relationship extraction. 
-                    total_arash, total_rows = HELPER_to_extract(partial_sents[0], partial_rows[0], extractors[0])
+                    total_arash, total_rows = HELPER_to_extract(partial_sents[0], partial_rows[0])
                     partial_sents = []
                     partial_rows = []
                 except Exception as e:
@@ -235,6 +246,8 @@ def OPTION1(df = None):
 
 
 def kill_bill_and_get_extractions(df):
+
+    print('Kill bill called')
     try:
         df_new = OPTION1(df)
     except Exception as e:

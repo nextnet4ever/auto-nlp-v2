@@ -19,28 +19,30 @@ combinations_list = [' '.join(subset) for r in range(1, len(query)+1) for subset
 
 def process_query_item(item):
     print(item)
-    #select line below for sorted literature and DOI by published date or by the best match to the query. rows=number of DOIs
-    #url = f"https://api.crossref.org/works?query={item}&sort=published&order=desc&rows=200"
-    url = f"https://api.crossref.org/works?query={item}&rows=50"
+    # #select line below for sorted literature and DOI by published date or by the best match to the query. rows=number of DOIs
+    # #url = f"https://api.crossref.org/works?query={item}&sort=published&order=desc&rows=200"
+    # url = f"https://api.crossref.org/works?query={item}&rows=50"
 
-    response = requests.get(url)
-    data = response.json()
-    dois = [item["DOI"] for item in data["message"]["items"]]
-    dois = pd.DataFrame(dois)
-    csv_file = f"text{item}.txt"
-    dois.to_csv(csv_file, index=False, header=False)
+    # response = requests.get(url)
+    # data = response.json()
+    # dois = [item["DOI"] for item in data["message"]["items"]]
+    # dois = pd.DataFrame(dois)
+    # csv_file = f"text{item}.txt"
+    # dois.to_csv(csv_file, index=False, header=False)
     
-    input_dir = f'{item}_pdf'
-    pdf_path = f"/home/ubuntu/lit_data/{item}_pdf/"
+    #input_dir = f'{item}_pdf'
+    input_dir = 'test_pdf'
+    # pdf_path = f"/home/ubuntu/lit_data/{item}_pdf/"
+    pdf_path = f"/home/derek/auto-nlp/auto-nlp-drive/"
     
     if not os.path.exists(input_dir):
         os.makedirs(input_dir)
     
-    os.system(f'python -m PyPaperBot --doi-file="{csv_file}" --dwn-dir="{pdf_path}"')# --scihub-mirror="https://sci-hub.ru"')# --restrict 1 --proxy "http://1.1.1.1::8080"')# --scihub-mirror="https://sci-hub.ru"')
+    #os.system(f'python -m PyPaperBot --doi-file="{csv_file}" --dwn-dir="{pdf_path}"')# --scihub-mirror="https://sci-hub.ru"')# --restrict 1 --proxy "http://1.1.1.1::8080"')# --scihub-mirror="https://sci-hub.ru"')
 
     # Convert the PDFs to text for NLP
     # Define the paths to the input and output directories
-    output_dir = 'text'
+    output_dir = '/home/derek/auto-nlp/auto-nlp-drive/text'
 
     # Create the output directory if it doesn't already exist
     if not os.path.exists(output_dir):

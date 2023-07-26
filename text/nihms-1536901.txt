@@ -1,0 +1,1043 @@
+The Goldilocks Window of Personalized Chemotherapy: Getting 
+the Immune Response Just Right
+Derek S. Park1,2, Mark Robertson-Tessi2, Kimberly A. Luddy3,4, Philip K. Maini5, Michael B. 
+Bonsall1, Robert A. Gatenby2,6, Alexander R. A. Anderson2
+1–Department of Zoology, University of Oxford, Oxford, United Kingdom 2–Department of 
+Integrated Mathematical Oncology, H. Lee Moffitt Cancer Center, Tampa, Florida, United States of 
+America 3-Comparative Immunology Group, School of Biochemistry and Immunology, Trinity 
+College Dublin, Dublin, Ireland 4-Department of Cancer Physiology, H. Lee Moffitt Cancer Center, 
+Tampa, Florida 5–Mathematical Institute, University of Oxford, Oxford, Oxfordshire, United 
+Kingdom 6-Department of Radiology, H. Lee Moffitt Cancer Center, Tampa, Florida, United States 
+of America
+Abstract
+The immune system is a robust and often untapped accomplice of many standard cancer therapies. 
+A majority of tumors exist in a state of immune tolerance where the patient’s immune system has 
+become insensitive to the cancer cells. Due to its lymphodepleting effects, chemotherapy has the 
+potential to break this tolerance. In order to investigate this, we created a mathematical modeling 
+framework of tumor-immune dynamics. Our results suggest that optimal chemotherapy scheduling 
+must balance two opposing objectives: maximizing tumor reduction while preserving patient 
+immune function. Successful treatment requires therapy to operate in a ‘Goldilocks Window’ 
+where patient immune health is not overly compromised. By keeping therapy ‘just right’, we show 
+that the synergistic effects of immune activation and chemotherapy can maximize tumor reduction 
+and control.
+Keywords
+Personalized medicine; tumor-immune interactions; chemotherapy; scheduling; T-cells; 
+homeostatic repopulation
+Introduction
+Immune tolerance occurs when the immune system fails to respond to a target despite its 
+potential to induce an immune response. In cancer, this failure leads to immune evasion and 
+tumor growth. CD8+ effector T cells, also known as cytotoxic T lymphocytes (CTLs), are an 
+Corresponding Authors:  Derek Park, 12902 USF Magnolia Drive, Mailstop: SRB 4, Tampa, FL 33612, Derek.park@aya.yale.edu, 
+813 745-6119, Alexander R. A. Anderson, 12902 USF Magnolia Drive, Mailstop: SRB 4, Tampa, FL 33612, 
+Alexander.anderson@moffitt.org, 813 745-6119. 
+Conflict of Interest statement:
+The authors declare no potential conflicts of interest.
+HHS Public Access
+Author manuscript
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Published in final edited form as:
+Cancer Res . 2019 October 15; 79(20): 5302–5315. doi:10.1158/0008-5472.CAN-18-3712.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptessential component of the adaptive immune system capable of responding to tumor antigens 
+and inducing cell death. Immunologically inert tumors induce T-cell tolerance through 
+multiple direct mechanisms such as inhibition of programmed death ligand 1 (PD-L1), 
+activation of the T-cell regulatory protein CTLA4, and production of regulatory cytokines 
+and metabolites [ 1], as well as indirect methods such as recruitment of regulatory T cells 
+(Tregs), myeloid-derived suppressor cells (MDSC) and tolerogenic dendritic cells (DC) [ 2]. 
+Tregs inhibit CTL cytotoxic activity via cell-cell contact [ 3, 4], and through secreted factors 
+such as transforming growth factor beta (TGF-beta) [ 5, 6]. They have posed challenges for 
+cancer immunotherapies as well as preventing the activation of the immune system during 
+more traditional therapy approaches [ 4, 7].
+Breaking tolerance requires removal of multiple suppressive factors and activation of 
+cytotoxic immune cells. Chemotherapy, while toxic to CTLs, also has paradoxical and 
+important immunostimulatory effects through dysregulation of the immunosuppressive 
+tumor microenvironment by reducing regulatory cytokine levels, changes in oxygen levels, 
+and reduced metabolites. Several chemotherapies, including cyclophosphamide, paclitaxel, 
+gemcitabine, and 5-fluorouracil, can selectively target MDSC and Tregs [ 8, 9].
+Additionally, highly cytotoxic chemotherapies with lymphodepleting effects create 
+immunologic space [ 10, 11]. During homeostasis, the body maintains T-cell pools at 
+consistent levels. When these pools are depleted, T cells refill this space through antigen-
+independent proliferation, termed homeostatic repopulation, which favors memory T cells 
+[12]. This homeostatic proliferation breaks tolerance, temporarily restoring immune 
+response to previously tolerated antigens [ 2]. This was first characterized in the post-
+transplant setting where memory T cells lose peripheral tolerance during homeostatic 
+repopulation, leading to graft rejection [ 12].
+Chemotherapy-induced tolerance breaking is dynamic and transient, often requiring 
+treatment breaks to achieve full effect. Various studies report that regulatory cells return 5–
+10 days posttreatment [ 8]. Homeostatic repopulation following moderate lymphopenia can 
+fully restore the lymphocyte pool as early as 4 days following therapy in murine models 
+[14]. Even in the case of nearly complete lymphodepletion using Alemtuzumab in non-
+human primate transplant models, the T-cell pool is completely restored in 8 weeks, 
+consisting of 96% memory T cells [ 15]. An obvious question then arises: is there an optimal 
+chemotherapy schedule that could maximize tumor kill and also enhance immune response?
+To investigate this question, we created a mathematical model of the complex tumor-
+immune dynamics that occur during multiple cycles of chemotherapy. In particular, we 
+investigated three, clinically relevant, therapeutic dynamics: immunodepletion, 
+immunostimulation via vaccination, and immunosupportive prophylactics. We identified 
+significant immune trade-offs during chemotherapy as well as the relevant patient metrics 
+that determine the magnitude and severity of these compromises. Further, by exploring the 
+impact of clinically-established therapy, as well as more experimental treatment decisions, 
+we illustrate a more complex interplay between chemotherapy and patient immune dynamics 
+than has been previously investigated. Our results indicate that optimal chemotherapy 
+requires identification of a “Goldilocks Window” in which treatment can both induce Park et al. Page 2
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptcytotoxic effects in the tumor and enhance the immune response to tumor antigens. 
+Therefore, instead of the one-size-fits-all paradigm of fixed therapy regimens, patient 
+immune biology should be a key consideration when developing personalized chemotherapy 
+strategies.
+Materials and Methods
+Overall Model Design
+A central assumption of this work is that a clinically-detectable tumor has induced a tolerant 
+state in which the immune system can no longer respond to tumor antigens. Chemotherapy 
+temporarily removes this tolerance through lymphodepletion, which eliminates Tregs and 
+allows a burst of immune response. However, the lymphodepletion itself also kills CTLs and 
+therefore reduces the potential cytotoxic efficacy. This double-edged response to 
+chemotherapy implies that there is an optimal therapeutic strategy.
+We develop a mathematical model that includes five major populations of cells: Tumor cells 
+(T), CTLs (E), Tregs (R), memory T cells ( M), and naïve T cells ( N). Immune function is 
+separated into two distinct temporal stages, relative to the time of application of each 
+chemotherapy cycle: 1) a period of CTL expansion immediately following the application of 
+chemotherapy (Figure 1, panel A); and 2) CTL contraction as tolerance returns (Figure 1, 
+panel B). The transition time between these phases remains poorly characterized, but 
+empirically occurs 5–10 days after the expansion starts [ 16]. This range has been observed 
+in murine models and is dramatic, involving over a 90% decrease in population size [ 17]. A 
+central assumption of this work is that a clinically-detectable tumor has induced a tolerant 
+state in which the immune system can no longer respond to tumor antigens. Systemic 
+lymphodepletion, including that caused by chemotherapy, can help break this tolerance. This 
+can have drastically different effects depending on the type and strength of lymphodepletion 
+[18, 19]. First, chemotherapy can selectively reduce Tregs [ 20, 21, 22] helping to break 
+peripheral tolerance. Second, strong lymphodepletion will cause homeostatic proliferation in 
+the lymphoid compartment, further reducing tolerance.
+However, dead immune cells cannot elicit cytotoxic effects or engage in homeostatic 
+proliferation. This implies that there is an optimal therapeutic strategy. If the dose is too 
+high, then the few remaining immune cells will not be able to take advantage of the 
+tolerance breaking; if the dose is too low, then the lymphodepleting effects will be 
+insufficient to break tolerance. In addition to these immune effects, the chemotherapy itself 
+can induce cancer cell death affecting both the tumor size directly and releasing tumor 
+antigens, adding another layer of complexity to the tumor-immune dynamics.
+Whilst the full course of lymphocyte recoveries are not observed in the treatment course, 
+measurements of lymphocyte populations over time have shown that a stable equilibrium is 
+reached between chemotherapeutic depletion and population sizes [ 23]. Therefore, in the 
+model, there is a window of 5 days immediately following each chemotherapy cycle in 
+which the immune system is sensitive, and outside of these periods, it is tolerant. We explore 
+the length of this window more thoroughly below.Park et al. Page 3
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptOur efforts to use mathematical modeling to inform chemotherapy build upon previous 
+immune and personalized medicine works. Mathematical models of tumor-immune activity 
+are numerous, given the complexity of the mechanisms involved (see [ 24, 25, 26, 27, 28] for 
+examples relevant to the present work). Explained more fully below, we extend the modeling 
+work of Robertson-Tessi et al. [ 29] to a more clinically-oriented setting by simplifying the 
+immunosuppressive dynamics while maintaining Treg recruitment and function. There have 
+been efforts to study explicit spatial dynamics of the growing cancer cell population in the 
+context of healthy tissue [ 30, 31]. Here, we implement an implicit spatial limitation on 
+growth (see explanation of f(T) below); our model may be extended in the future to 
+incorporate explicit spatial dynamics. Our initial framework choices have been to 
+incorporate patient immune parameters to build towards a model for personalized oncology 
+[32].
+During the phase in which the immune system is sensitive to the tumor, a few key processes 
+occur. CTLs, which target and kill the tumor, are recruited from a memory cell population 
+due to response to tumor antigens [ 16]. Recent studies indicate that memory T cells make up 
+the majority of T cells engaged in homeostatic repopulation [ 15, 33]. These memory cells 
+are constantly undergoing a low level of replenishing proliferation, but they only convert to 
+CTLs during the sensitive expansion phase following lymphodepletion. During this phase, 
+there is also tumor-mediated recruitment of Tregs. This eventually causes a significant shift 
+in immune dynamics, leading to a contraction of the CTL compartment during the tolerized 
+phase. Under tolerance, there is no longer a significant recruitment of CTLs from the 
+memory cell compartment. Instead, while the existing CTLs do carry out some tumor-killing 
+function, the Tregs decrease the CTL number.
+Quick guide to equations and assumptions
+dT
+dt=T
+f(T)−k0TE
+T+E1 −bR
+R+E
+f(T) =1
+Ttransm− 1rTP
++T1 −m
+rTP1
+P
+dE
+dt=Hto f f−t1 −M+N
+KmaxγαTM
+T+M−Ht−to f fρE1 +cR
+R+E+δEE
+dM
+dt=rMM1 −M+N
+Kmax−Hto f f−t1 −M+N
+KmaxαTM
+T+M+Ht−to f fρωE
+dR
+dt=σT−δRR
+dN
+dt=rNN1 −M+N
+KmaxPark et al. Page 4
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptOur immune tolerance model assumes that the growth of tumor cells ( T) can be checked by 
+CTLs (E). However, CTLs are themselves inhibited by Tregs ( R) that are recruited at a rate 
+σ by tumor antigens. This leads to CTL-mediated tumor cell death being moderated by the 
+quantity of Tregs R
+R+E. CTLs exhibit different behaviors during immune expansion and 
+immune contraction. This switching behavior is modeled with the Heaviside function 
+Hto f f−t. During the immune expansion phase, CTLs are recruited from the memory 
+pool based on both available memory cells ( M) and the tumor burden TM
+T+M. During 
+immune expansion, the antigenicity of the tumor α induces differentiation to CTLs TM
+T+M. 
+However, as immune tolerance sets in, there is a contraction in the CTL population, caused 
+by degradation of CTLs by Tregs b. During immune contraction, CTLs can convert back to 
+memory T cells ωE,ω<1. Finally, the total remaining lymphocyte population that is not 
+sensitive to the tumor (N) replicates in a logistic growth model rNN1−M+N
+Kmax.
+Tumor dynamics
+dT
+dt=T
+f(T)
+1−k0TE
+T+E1 −bR
+R+E
+2
+(1)
+Tumor growth dynamics (term 1) are approximated via a combination of exponential growth 
+for smaller tumors and power law growth for larger tumors. This growth model includes a 
+few key assumptions about the limitations which a growing tumor faces before clinical 
+detection. In the absence of effector cells attacking the tumor population, tumor cells first 
+grow exponentially but then transition to power-law growth. This growth dynamic is typical 
+of early-stage, preclinical malignant growths and is based on mathematical modeling as well 
+as experimental observation [ 29]. Furthermore, there are also practical limitations to the 
+biological validity of the tumor population sizes which the model can approximate. While 
+the model can simulate unbounded tumor growth, this is obviously clinically impossible due 
+to the resulting morbidity and eventual patient mortality. Here, we restrict the analysis to the 
+range of tumor sizes which are typical for clinically detectable masses, namely T< 1010
+cells. The transition between exponential and power law growth dynamics is governed by 
+f(T) as defined in eq. (2).Park et al. Page 5
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptf(T) =1
+Ttransm− 1rTP
++T1 −m
+rTP1
+P
+(2)
+The function f(T) employs the method of modeling tumor growth in [ 29]. Beyond a certain 
+size (Ttrans), small tumors are not able to sustain their early exponential growth due to 
+physical and nutrient limitations, and therefore transition to power law growth at larger 
+tumor sizes. The smoothness of this transition is governed by the exponent P. The parameter 
+rT represents the tumor growth coefficient.
+Term 2 of Equation 1 represents the tumor loss due to killing by CTLs. Parameter k0 
+represents the CTL cytotoxic efficacy, with the actual tumor kill rate dependent upon the 
+relative numbers of tumor and CTLs TE
+T+E. An estimate of this efficacy was initially set at 
+1 day−1 based on the potency of CTLs in preventing tumor growth when stimulated by 
+multiple types of tumor antigen [ 34]. In vivo  killing capacities of CTLs have also been 
+measured in the 1 – 10 day−1 range by real-time imaging in viral systems, although there is 
+significant heterogeneity [ 35]. However, this rate is mitigated by the presence of Tregs, with 
+b representing their inhibition efficacy. As Tregs increase in density, the CTL-mediated 
+tumor death rate decreases.
+CTL dynamics
+dE
+dt=Hto f f−t
+11 −M+N
+Kmax
+2γαTM
+T+M
+3−Ht−to f f
+4ρE(1 + cR
+R+E)
+5+δEE
+6
+(3)
+CTL dynamics are modeled in two phases, expansion (terms 1–3) and contraction into 
+tolerance (terms 4–6). Terms 1 and 4 switch between these phases via the Heaviside 
+function, with toff being the length of the expansion phase (5 days, unless noted) 
+immediately following each round of chemotherapy. Terms 2 and 3 govern the growth of 
+CTLs during immune sensitivity to the tumor. CTLs are generated based upon the 
+antigenicity of the tumor ( α) as well as the number of tumor and memory cells. Modulating 
+this is an amplification rate, γ, since one memory cell can yield multiple CTLs. Term 2 
+accounts for the maximum number of lymphocytes that can be supported by the cytokine 
+pool. This paradigm of CTL function being limited by cytokine availability is supported by 
+lymphodepletion studies showing increased CTL activity when IL-7 and IL-15 cytokine-Park et al. Page 6
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptresponsive cells were removed [ 36]. When the immune compartment is full and in 
+homeostasis, this term will be near zero, effectively shutting down CTL recruitment; 
+however, immediately after a dose of chemotherapy, memory and naïve T cells are depleted, 
+which promotes CTL expansion.
+Term 5 represents the contraction of the CTL compartment that occurs due to immune 
+tolerance. The death rate of CTLs during contraction, ρ, is due to decreases in the level of 
+supportive cytokines. This rate is increased by the relative fraction of Tregs that are present, 
+R
+R+E. The modifying constant c represents the sensitivity of CTL suppression to Tregs 
+through a variety of mechanisms [ 37]. Lastly, term 6 represents the rate of conversion of 
+CTLs back into memory cells, an active mechanism during immune contraction [ 38, 39].
+Memory T cell dynamics
+dM
+dt=rMM1 −M+N
+Kmax
+1−Hto f f−t
+21 −M+N
+Kmax
+3αTM
+T+M
+4+Ht−to f f
+5δEωE
+6
+(4)
+Memory cells continually replenish themselves through homeostatic growth in term 1. 
+Parameter rM is the maximum memory-cell growth rate, subject to a carrying capacity, 
+Kmax. During the immune expansion phase (terms 2–4), memory cells convert to CTLs, 
+governed by the relative abundances of tumor and memory cells, TM
+T+M, as well as the 
+antigenicity (α). As described in Eq. (3), the rate of recruitment is moderated by the 
+homeostatic fraction of the overall immune system (term 3). During the contraction phase 
+(terms 5 and 6), memory cells are replenished from the CTL compartment. A fraction ( ω) of 
+the CTLs is successfully converted back to memory cells [ 38]. Due to some loss and 
+inefficiency in conversion, ω<1 [40].
+Treg and naïve T cell dynamics
+dR
+dt=σT−δRR
+(5)
+Tregs are recruited by tumor cells with rate σ, and they decay with a rate δR [41, 42].Park et al. Page 7
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptdN
+dt=rNN1 −M+N
+Kmax
+(6)
+Naïve T-cell dynamics follow homeostatic proliferation with rate rN, up to a common 
+carrying capacity of Kmax, which is the maximum number of memory and naïve T cells in 
+the immune system [ 43].
+The model was parameterized based on literature sources when possible, as shown in Table 
+1. For many cases, there was evidence of variation in parameters, and some cannot be easily 
+measured. Where possible, we have tried to make a biologically reasonable order-of-
+magnitude approximation. In order to address this parameter uncertainty we explicitly 
+consider the impact of parameter variation on model results.
+Simulating chemotherapy and evaluating outcomes
+To establish tolerance in the system and allow transients from initial conditions to dampen 
+before applying therapy, the simulation was initialized with a tumor size of 107 cells. 
+Chemotherapy was started when the tumor reached 108 cells and was simulated as periodic 
+doses of cytotoxic therapy at 14-day intervals. In total, 10 cycles of chemotherapy were 
+applied. At the time of each treatment cycle, all cell populations (immune and tumor) were 
+instantaneously reduced by a fraction C0 representing the cytotoxic effect of chemotherapy 
+on that population. This instantaneous death fraction can be understood as lethal dose (LD) 
+values with, for example, C0 = 0.5  representing LD 50. The choice for an instantaneous 
+decrease is simplifying, allowing us to omit pharmacodynamics; however this approach 
+reflects the general potency of many therapy agents. For example, in vitro  studies have 
+shown that cellular uptake and incorporation into RNA for 5-fluorouracil occurs as soon as 3 
+hours after exposure [ 44]. Uptake levels were directly shown to correlate with cytotoxicity. 
+For doxorubicin, cytotoxicity studies have found that just 1 hour of exposure is enough to 
+induce a 90% decrease in viable, colony forming cells [ 45].
+Immune cells were reduced by the same fraction ( C0) on each chemotherapy cycle. 
+However, to account for tumor resistance to therapy, the fractional tumor reduction for cycle 
+i (Ci) was linearly reduced with each cycle, such that the cytotoxic fraction on the last cycle 
+was 75% of the initial fraction C0. Approximating the impact of chemoresistance on drug 
+efficacy is challenging since values vary for different classes of drugs. Furthermore, Hao et 
+al. [46] noted dose-dependent differences of up to 400% between resistant and resensitized 
+prostate cancer cell populations to docetaxel. Here, the value of 75% chemotherapy efficacy 
+at the last cycle represents a 33% advantage of survivorship for a resistant population versus 
+a susceptible population. It is a conservative estimate of the impact of resistance, but we 
+believe it is reasonable given that tumor populations are unlikely to be entirely resistant. 
+Varying this range is a relevant question for future research. For our purposes, Ci is given by:Park et al. Page 8
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptCi=C01 − 0.25i
+10
+(7)
+The final tumor size after 10 cycles of chemotherapy was compared to the tumor size at the 
+start of treatment (108 cells) and evaluated according to RECIST categories. Specifically, a 
+total loss of tumor (<−99% change in size) is a complete response (CR). A change between 
+−30% and −99% is considered a partial response (PR). Tumor changes between −30% and 
++20% are classified as stable disease (SD) and increases of greater than +20% are seen as 
+progressive disease (PD) [ 47]. While there are many different methods of measuring therapy 
+efficacy impact on disease, RECIST categories were chosen here since they have correlated 
+well with overall survival in patients across a variety of cancers.
+Simulation environment
+The model was programmed in the Python language (ver. 2.7.11). The open-source packages 
+Scipy (ver. 0.17.0), Numpy (ver. 1.10.4), and Matplotlib (ver. 1.5.1) were used for 
+simulation of the ODEs as well as visualization of the results. The platform for the program 
+was both an Intel(R) Core (TM) i7–6820 HQ processor as well as the high performance 
+computing cluster at Moffitt Cancer Center, Tampa, Florida, USA. The source code is 
+available at the github repository for the Integrated Mathematical Oncology department at 
+github.com/MathOnco/Goldilocks .
+Results
+Patient memory cell populations determine a ‘Goldilocks Window’ of optimal dosing
+Memory cell population sizes are variable among patients; Arstila et al. have estimated there 
+to be 106 – 107 T-cell clones in the human body with approximately 105 memory T cells per 
+antigen [ 29, 48]. However, due to antigen responses being polyclonal, this suggests multiple 
+orders of magnitude of potential variation in memory T-cell numbers. Therefore, varying 
+doses of chemotherapy were simulated for a range of memory cell population sizes (Figure 
+2A and 2B). Results from the model show that patient memory-cell numbers significantly 
+influence the optimum chemotherapy dose. Generally, there is a minimum memory-cell 
+population size that is necessary for any given strength of chemotherapy to be successful. 
+Above this threshold, the more memory cells there are, the better the improvement with 
+stronger doses of therapy. Conversely, this means that when memory-cell populations are 
+close to the minimum threshold, chemotherapy should be similarly weak for a more 
+favorable outcome. Furthermore, if memory cells are below the minimum threshold, then the 
+optimal strategy is to use strong chemotherapy (Figure 2A and B), since the immune system 
+will not contribute to tumor regression.
+The double-edged nature of chemotherapy on the immune system can be better understood 
+through the transient dynamics during therapy (Figure 2C and D). In cases with stronger Park et al. Page 9
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptchemotherapy dosing, there is an early decrease in tumor population levels due to the 
+cytotoxic strength of the therapy. However, we observe a trend that these strong therapies 
+tend to lead to failure and larger final tumor sizes than if treated with a ‘weaker’ 
+chemotherapy regimen, which provides lower cytotoxicity on the tumor but maintain tumor 
+size reduction for the duration of therapy.
+This counterintuitive result stems from the fact that cytotoxicity alone is insufficient for 
+suppressing tumor growth, especially due to the accumulating chemoresistance. Rather, it is 
+the synergistic effect of cytotoxicity as well as the breaking of immune tolerance and 
+consequent recruitment of CTLs that keeps tumor populations in check. Our in silico 
+treatments consistently show that there is an inherent disadvantage to high-dose 
+chemotherapy. There is a gradual decrease in the CTL population over multiple rounds of 
+treatment due to the net loss that stronger dosing causes in memory T-cell populations 
+(Figure 2D). It is these memory cells that are affected the most by chemotherapy since they 
+can only recover relatively slowly. If the cytotoxic pressure on memory cells is greater than 
+the recovery rate of that compartment, then even with a resensitized immune system, 
+expansion will lead to fewer total CTLs and ultimate treatment failure. In contrast, if the 
+immunodepleting side effects of chemotherapy can be balanced with immune recovery, then 
+more sustainable treatment responses are possible. In short, there is a tradeoff between 
+having chemotherapy strong enough to sufficiently break tolerance, but mild enough to leave 
+sufficient memory T cells for adequate CTL expansion. Akin to the story of Goldilocks and 
+the three bears, the balancing of these two immunological goals leads to an intermediary 
+chemotherapy strength that is ‘just right’. In silico  simulation shows that this “Goldilocks 
+Window” is highly dependent upon patient-specific, pre-existing memory T-cell populations.
+Patient-specific tumor growth rate and immune strength determine chemotherapeutic 
+flexibility
+While we identified this Goldilocks Window of optimal, sub-maximal chemotherapy dosing, 
+we also sought to explore it in the broader context of patient-specific disease and immune 
+variation. For tumor growth rates, we found that successful treatment outcomes are more 
+sensitive to chemotherapy dosing for faster growing tumors and less sensitive for slower 
+growing tumors. Experimental and model analyses have shown that selection pressures on 
+growing tumors can lead to significant heterogeneity in metabolism and growth rates [ 49]. In 
+our framework, the tumor growth rate parameter ( rT) was set to the maximum speed for 
+doubling during the exponential growth phase (1000 cell−1 per day, representing a doubling 
+time of 1 day), but we also explored faster and slower growth rates (Figure 3A and 3B).
+In slower growing tumors ( rT < 1000), chemotherapy’s cytotoxic effects are sufficient for 
+tumor control. After the partial tumor clearance due to each cycle, there is regrowth of the 
+cancer cell population (Figure 2A and B). For slower growing tumors, there is less intercycle 
+regrowth and therefore cancer cell populations can be controlled by chemotherapy alone 
+without the need for CTL killing. The result is that, for slower growing tumors, there is no 
+Goldilocks Window.
+However, for faster growing tumors ( rT > 1000) it becomes necessary to maintain 
+chemotherapeutic strength within the Goldilocks Window in order to achieve optimal Park et al. Page 10
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptoutcomes. For these tumors, regrowth between chemotherapy doses is significant and 
+demands the addition of CTL-mediated tumor killing for disease control. Chemotherapy that 
+is stronger than the Goldilocks Window hamstrings the patient’s immune activation.
+Importantly, for the most aggressively growing tumors, there is actually a ‘worst-case 
+scenario’ of intermediary chemotherapy strength (Figure 3B). Here, the worst option for 
+chemotherapy is not the strongest possible dose but is instead a ‘mid-range’ strength in 
+treatment. At this chemotherapeutic strength, the drug alone is insufficient to cause a 
+reduction in tumor size. However, the dose is still strong enough to lead to severe memory 
+cell depletion, undermining any immune efforts at constraining tumor growth.
+Separate from tumor parameters, patient immune characteristics can also impact the 
+sensitivity of treatment outcomes to chemotherapy dosing. One important parameter we 
+sought to explore was the rate of CTLs in killing tumor cells ( k0, Figure 3C and 3D). 
+Without changing the initial patient memory-cell populations ( M0 = 106), or the tumor 
+growth rate ( rT = 1000), the CTL-mediated cytotoxicity rate was varied around the 
+biologically realistic parameter of k0 = 0.9 [ 34]. CTL efficacy was found to dramatically 
+impact sensitivity chemotherapy dosing and the Goldilocks Window. Lower rates of CTL-
+mediated tumor cell death lead to greater sensitivity of treatment outcomes on chemotherapy 
+dosing (Figure 2C and D). With a lower value of k0, more CTLs are necessary to exert the 
+same degree of immune control over the tumor. However, strong chemotherapy on a patient 
+with lower k0 values prevents sufficient CTL expansion by rapidly diminishing the memory-
+cell populations. Higher CTL killing rates, though, removed the restriction of this 
+Goldilocks Window and made successful treatment outcomes less sensitive to dosing. While 
+higher chemotherapy doses may lead to larger immune depletion, more efficient CTLs mean 
+that these smaller immune populations still lead to successful treatment outcomes.
+In addition, we examined the impact of changing the window duration for immune 
+expansion immediately following each chemotherapy dose. Current literature indicates that 
+immune contraction can begin to occur anywhere from 4 to 8 days after treatment [ 8, 14, 
+17]. When these extremes were explored (see Figure S1), there was no significant qualitative 
+difference to our observation of a sub-maximal optimal dosing range when compared 
+between 4 days (Figure S1A) and 8 days (Figure S1B). While a longer window of immune 
+expansion (Figure S1B) leads to more favorable outcomes for more rapidly growing tumors 
+when treated in the optimal dosing range, the actual presence of this sub-maximal dosing 
+range does not change. Furthermore, there is almost no difference in the outcomes of 
+patients who are overtreated. This also implicitly addresses our mathematical 
+implementation of a switch via a Heaviside Function. Specifically, while there might be any 
+number of less abrupt and more gradual transitions between immune expansion and immune 
+contraction, our exploration of the dynamics at the extremes of this transition range would 
+give an idea of what the intermediate behaviors due to a smoother transition might cause. 
+That is, our qualitative results would not significantly change with a smoother function.
+In a broader exploration of the model’s immune parameters, a general trend was observed 
+that a more robust immune response would improve the outcome (Figures S2–S7). For 
+certain model parameters that were more difficult to accurately estimate from the literature, Park et al. Page 11
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptwe explored their variation for the default tumor growth rate and a chemotherapy strength of 
+25%. If the patient had a stronger immune system characterized by lower CTL death rate 
+(δE), lower sensitivity to Tregs ( c), greater memory cell expansion ( γ), regrowth ( rM), and 
+back-conversion ( ω), the final tumor population was smaller. Furthermore, more robust anti-
+tumor immune responses led to greater maximum possible reductions over the range of 
+chemotherapy. In addition, these changes led to expansions of the Goldilocks Window in 
+terms of chemotherapy doses that could achieve tumor reductions.
+In short, patient-specific disease and immune biology determines the sensitivity of treatment 
+outcomes to chemotherapy dosing. For rapidly growing tumors, chemotherapy must be 
+maintained in a sub-maximal Goldilocks Window to optimize drug and immune synergies. 
+However patient immune biology matters as well, with weaker immune characteristics also 
+leading to a greater necessity to stay within the Goldilocks Window. Importantly, this 
+presents potentially counterintuitive guidance since an initial motivation may suggest that, in 
+a situation where a patient has a weaker immune system, chemotherapy strength should be 
+increased in order to compensate. However, our model suggests that the lymphodepleting 
+impact of heavy chemotherapy on an already weakened immune system will only worsen 
+outcomes. When confronted with weaker patient immune systems, chemotherapy needs to 
+be maintained within the Goldilocks Window for successful outcomes.
+Improvements to therapy outcomes from immunostimulatory vaccines
+Patient-specific vaccines have become a recent hallmark in personalized cancer therapy. One 
+of the first to acquire FDA approval was Sipuleucel-T, for treating metastatic castrate 
+resistant prostate cancer [ 50]. Each vaccine is tailored to a specific patient by culturing 
+dendritic cells from patients using a specific tumor antigen. Reinjection into the patient 
+would potentially stimulate a T-cell mediated antitumor immune response. Three doses were 
+administered in 2 week intervals with significant clinical responses being observed. 
+Vaccination led to a 22% reduction in the relative risk of death, although there was no 
+noticeable decrease in the rate of progression of disease [ 50]. The specific effect on T cells 
+was quantified by looking at T-cell receptor changes in response to vaccination. Certain 
+receptor sequences were enriched, while others were significantly decreased [ 51], suggesting 
+that the vaccine promoted an antigen-specific immune response against the tumor.
+To study the effects and potential synergy of chemotherapy with this method of T-cell 
+stimulation, we simulated a vaccine regime similar to that used for Sipuleucel-T (3 doses, 
+spaced 14 days apart), with different vaccine strengths. Mathematically, this was modeled by 
+modifying the ODEs that govern CTL expansion, without explicitly representing the 
+complex DC-to-T-cell cascade that the vaccine induces. Other models have examined the 
+DC cascade in more detail. For example, the explicit migration of dendritic cells between 
+blood, spleen, and tumor have been modeled via delay-differential equations in order to 
+better characterize the specific dose timing-dependent responses to therapy [ 28]. For 
+simplicity, here we focus solely on the net effect of the vaccine on T-cell numbers by 
+changing the antigenicity parameter of the tumor, α, from a constant coefficient to a 
+variable, time-dependent function, αv(t):Park et al. Page 12
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptαv(t) =α+v1
+2t
+thal f
+(9)
+Total antigenicity is modeled as the result of both the constant, baseline antigenicity of the 
+tumor, α, and an exponentially decaying vaccine-augmented component, v, which decays 
+with a half-life, thalf = 3 days, a biologically realistic timespan [ 52]. This model of dynamic 
+antigenicity can be expanded for multiple vaccinations, as used in the clinical protocol (Eq. 
+10).
+αv(t) =α+∑
+n= 1nvac
+Ht−tnv1
+2t−tn
+thal f
+(10)
+Here, H(t) is again the Heaviside function. The constant nvac represents the total number of 
+vaccine injections and tn represents the time of the nth vaccination. The ODEs used for the 
+simulation of immune and tumor cell populations are then dependent on the instantaneous 
+current value of αv(t) throughout the course of simulated therapy.
+Here, we explored a range of antigenic increases due to potential patient-to-patient variation 
+in responses to immunostimulatory vaccines. While dendritic cell vaccines like Sipuleucel-T 
+administer all of the available dendritic cells, responses in individual patients vary in how 
+much the antigenicity is changed. In our range of exploration, though, we found some 
+commonalities in vaccine interaction for chemotherapy.
+Results show that vaccine therapy can improve outcomes, but only within a specific range of 
+chemotherapy strengths (Figure 4). Treatment outcomes improve when a vaccine is used 
+with moderate chemotherapy (Figure 4A), but for very high chemotherapy doses, the 
+beneficial effects of a vaccine are diminished. As before, the underlying cause for decreasing 
+efficacy is the persistent lymphodepletion due to the chemotherapy. Antigenicity 
+augmentation due to vaccine stimulation is offset by reduced CTL expansion. However, very 
+low-dose chemotherapy poses its own challenges, because with insufficient 
+lymphodepletion, tolerogenic mechanisms and greater Treg recruitment inhibit any CTL 
+response augmented by the vaccine. The immune system remains closer to tumor-tolerized 
+homeostasis, and as a result vaccine stimulation is mitigated because the immune system is 
+already suppressed. Therefore, the width of the optimal window is not significantly affected Park et al. Page 13
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptby the vaccine, since the vaccine has no effect on a highly depleted or tolerized immune 
+system.
+Therefore, even with immunostimulatory vaccines, there exists an optimal “Goldilocks” 
+Window. Quantitatively, we define this window to be the region in which a therapy dose can 
+offer at least a 20% reduction in tumor size since this is the necessary amount for disease to 
+become classified as a partial response. In order for there to be this maximized benefit from 
+vaccine application, the chemotherapy regimen must be ‘just right’. Chemotherapy must 
+have sufficient lymphodepletion to resensitize the immune system, but must leave enough 
+immune cells such that vaccine stimulation leads to a large CTL response. Similar to the 
+results of chemotherapy without the vaccine, the specific range of this Goldilocks Window 
+depends upon the initial patient memory cell ( M0) numbers.
+We note that the small oscillations observed in the plots (Figure 4B) are a result of the use of 
+dual growth laws for the tumor. Essentially, giving the vaccine causes the tumor to dip into 
+the faster exponential growth phase at an earlier chemo cycle than when chemo is given 
+alone. Since the chemo cycles are discrete and instantaneous, this generates an effective step 
+function to the response with increasing chemo dose, superimposed on the single-peaked 
+optimal curve; this step function is further rounded by both the smoothing exponent P 
+between the growth laws and the non-linear interactions between tumor growth and immune 
+response at small tumor sizes.
+Impact of variation in immune support
+Chemotherapeutic lymphodepletion in the clinical setting can pose a serious threat to the 
+safety of the patient through neutropenia [ 53], which commonly leads to dose reductions and 
+disruptions to the standard schedule of therapy for patients. Consequently, multiple tools 
+have been developed to help mitigate the effects of chemotherapy on the immune system. 
+For example, it was recognized that dexamethasone treatment before carboplatin and 
+gemcitabine could not only increase chemotherapy efficacy but also reduce the 
+lymphodepleting effects by preventing uptake in the spleen and bone marrow [ 54]. In 
+contrast, other aspects of cancer therapy can potentially hamper CTL responses to tumor 
+insults. For example, G-CSF application has been shown to reduce CTL activation and could 
+conceivably impede the impact of lymphodepletion as a break from immune tolerance [ 55, 
+56]. More generally, however, the broader impact of immune system augmentation or 
+suppression during therapy remains unexamined.
+In order to examine the effect of attenuated or augmented lymphodepletion on therapy 
+outcome, we allowed for variable chemotherapeutic toxicity to immune populations, as 
+compared to the tumor population. Mathematically, this simply means modifying the 
+chemotherapy dose by a scaling factor h. The effect of chemotherapy on immune cell 
+populations at a given treatment time is:Park et al. Page 14
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptI1=I01 −hC
+(8)
+where I1 is the immunological population size after application of chemotherapy, I0 is the 
+population size before therapy, and 0 < C < 1  is the dose strength. The specific numerical 
+range in which h falls represents either attenuated or augmented chemotherapeutic toxicity. 
+For values of 0 < h < 1 , this represents an attenuated toxicity on the immune system relative 
+to the toxicity on the tumor. In contrast, values of h > 1  represent higher toxicity on patient 
+immune populations than on the tumor. This could be due to patient-dependent increased 
+sensitivity to chemotherapy. The maximum possible reduction of cells by chemotherapy 
+when modified by immune support is 100%. This leads to the resulting condition that hC < 
+1. For our in silico  therapies, h was varied across the allowable ranges for three different 
+strengths of chemotherapy. Values of C were chosen to represent lower ( C = 0.25 ), middle 
+(C = 0.6 ), and higher ( C = 0.9 ) dose chemotherapy (Figure 5A).
+Interestingly, the results suggest that immune-supporting combination therapy has 
+essentially no benefit when given with low dose chemotherapy. As shown in Figure 5, 
+similar tumor reduction occurred for a wide range of values of h around h = 1 . Furthermore, 
+outcomes were worse when h was very low or very high. In situations where it was very low, 
+final tumor sizes were large because a lack of lymphodepletion did not sufficiently break 
+immune tolerance. In contrast, for larger h values, there was over-depletion which prevented 
+an effective immune response despite significant tolerance breaking.
+In contrast, high dose chemotherapy saw treatment failure or success highly dependent upon 
+the amount of immune support. Similar to low dose therapy, a small value of h that 
+mitigated the depleting effects of chemotherapy led to the best possible outcomes in terms of 
+tumor shrinkage. Final tumor sizes were, in fact, multiple orders of magnitude lower than 
+was possible with low-dose chemotherapy. As h increased (representing less toxicity 
+mitigation) treatment outcomes rapidly worsened. The transition value h*, where the clinical 
+outcome rapidly shifts, indicates a threshold effect with regard to immune support. For high 
+chemotherapy doses, immune support treatments must have a significantly large mitigation 
+(h < h* ) of immunodepletion in order for successful treatment responses to occur. The 
+position of this inflection point is influenced by the strength of the patient immune system to 
+begin with. In expanded parameter analyses, the strength or weakness of the simulated 
+patient’s immune system led to changes in the upper bound of the Goldilocks Window 
+(Figures S2 – S7).
+The moderate strength chemotherapy regimen yielded only partial benefits of either extreme. 
+The greatest tumor reduction possible, with immune support, yielded tumors that were 
+smaller than those achievable with low dose chemotherapy. However, these tumors were still 
+multiple orders of magnitude larger than those achievable with high dose chemotherapy. For Park et al. Page 15
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscripttreatment failure at lower immune support ( h > h* ) tumor sizes were actually larger than 
+when high dose chemotherapy failed.
+Clinically, the results suggest that chemotherapy dose strength can be used to mitigate 
+uncertainty regarding the amount of immune support a certain treatment will give to a 
+specific patient. Low dose therapy offers a wide range of potential immune support in which 
+treatment can successfully reduce tumor sizes. The disadvantage is that the maximum tumor 
+size reduction still leaves larger tumors than are possible using higher doses of 
+chemotherapy. While our model has not analyzed this, a potential impact is that larger tumor 
+sizes could lead to more heterogeneous populations and thus lead to a higher likelihood of 
+resistant or metastatic populations. However, higher doses have a narrower range of immune 
+support in which they are successful. Chemotherapy can be balanced, then, against how 
+certain the clinician is of the benefit that G-CSF (or other immune supporting drug) will 
+give. For patients where there is high certainty of a significant benefit due to the drug, high 
+dose therapy is optimal. In contrast, lower dosing should be used when the drug may have 
+lower or variable efficacy.
+Finally, we sought to investigate how variation in the effectiveness of these immune 
+adjuvants might impact treatment outcomes in a group of patients. Chemotherapy treatment 
+leads to a wide range of responses, both successful and unsuccessful, across multiple types 
+of cancer [ 47]. This variation has been attributed to both disease variation, patient variation, 
+and interactions between the two. However, less attention has been given to variable patient 
+responses to secondary drugs – such as G-CSF – and how they impact therapy. Patient 
+responses to these secondary drugs are currently poorly measured and could have significant 
+implications for therapy outcomes.
+To better explore the effect of variable patient responses to immune support drugs, cohorts 
+of 500 patients were randomly generated from a normal distribution with a mean immune 
+support response value of h = 0.8  and variance of 0.2. These values were chosen to center 
+the distribution around the model-derived threshold value h* = 0.8 . While not directly 
+describing patient responses to immune support drugs, a normal distribution for selection 
+was chosen due to the fact that immune cell counts have been found to be normally 
+distributed in population cohorts [ 57].
+Similar to our previous investigations, cohorts were then subjected to regimens of low ( C = 
+0.4) and high ( C = 0.8 ) chemotherapy strengths (Figure 5B). Percent changes in tumor size 
+after therapy were displayed for each individual patient in the cohort to generate a waterfall 
+plot. In doing so, we used our model to simulate cohort responses as is commonly measured 
+in aggregated studies of patient data [ 47]. The waterfall plots (Figure 5) illustrate that 
+chemotherapy strength can significantly change the proportion of successfully responding 
+patients in a population with variable responses to immune prophylactics. This is significant 
+since the proportion of successful responses is often an important criterion for judging 
+therapeutic efficacy. The simulated waterfall plots show how clinical outcomes could not 
+only be the result of therapy, but also due to inherent immune variation within the cohort.Park et al. Page 16
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptDiscussion
+A major barrier to success for immunotherapy in cancer is tolerogenic mechanisms that 
+reduce the immune response to tumor antigens [ 58, 4, 7]. A potential solution has come 
+from observations that lymphodepletion stimulates homeostatic proliferation in the immune 
+system which can transiently restore an immune response. This has led to increasing efforts 
+to selectively apply chemotherapy to improve outcomes from immunotherapy [ 59].
+To better understand this potential synergy, we constructed a mathematical model to frame 
+these complex dynamics and identify critical parameters that govern the clinical outcomes. 
+Our studies focused on three clinically-observed dynamics of immunodepletion, 
+immunostimulatory vaccination, and immunosupportive prophylactics. With regard to 
+immunodepletion, we demonstrated that chemotherapy results in a trade-off. At very high 
+doses, chemotherapy has a maximal cytotoxic effect on the tumor but also maximally 
+depletes T cells such that no effective CTL response can be mounted despite the transient 
+loss of tolerance during re-expansion of the immune cells after completion of chemotherapy. 
+Similarly, low doses of chemotherapy are insufficient to produce the post-treatment immune 
+cell expansion that is necessary for reversal of immune tolerance.
+Importantly, however, we find there is a Goldilocks Window of chemotherapy doses in 
+which lymphodepletion causes adequate immune resensitization, but does not impose an 
+overly large recovery burden. This window is governed by the patient-specific quantity of 
+memory T cells so that larger pre-treatment T-cell populations allow more favorable 
+outcomes with higher doses of chemotherapy. In contrast, fewer pretreatment CTLs can limit 
+the immune response even in the Goldilocks window of chemotherapy. Thus, there is a 
+necessary ‘minimum efficacy’ of CTLs for successful stimulation of immune response by 
+chemotherapy. Below this threshold of immune activity, the benefit of chemotherapy is 
+almost solely dependent on its inherent cytotoxicity (Figure 6).
+Our model also provides insight into the potential effects of variation in the tumor growth 
+rate. In slower growing tumors, chemotherapy alone can be sufficient to achieve optimal 
+treatment response. Treatment of faster growing tumors, however, is best when the 
+chemotherapy is administered to enhance the immune response. Unfortunately, if the pre-
+treatment population of CTLs is small, we find chemotherapy for rapidly growing tumors 
+will be ineffective if it is both highly lymphodepleting and insufficiently cytotoxic to 
+significantly reduce tumor growth. Assessing the clinical importance of this question is 
+challenging because it remains unclear from the literature as to the actual size of the 
+population of tumor-specific T cells that are present during treatment. In spite of these 
+difficulties, the impact and existence of anti-tumor immunity has been bolstered by recent 
+immunotherapies which act to remove inhibitions to T-cell action [ 60].
+Chemotherapy is increasingly being used in concert with vaccines to help stimulate the 
+patient immune system. We investigated the interactions between vaccines and 
+lymphodepletion and found that, as before, there is a window of chemotherapy ranges in 
+which vaccines can improve outcomes versus chemotherapy alone. At very high doses, 
+however, the resulting lymphodepletion substantially reduces benefits of immune Park et al. Page 17
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptstimulation by vaccination. More broadly, other novel immunotherapies could also 
+potentially be hampered by over-depletion of the immune system.
+To further investigate the potential impact of this interaction, we modeled the effect of 
+differential responses to immune prophylactics. G-CSF and other drugs have become 
+common recourses in chemotherapy for mitigating the immunodepletion effects on patients 
+[61]. However, recent studies have suggested that T cell response is hampered by G-CSF 
+administration [ 55]. While G-CSF may help prevent neutropenia and cytopenia for patients, 
+it may impede the ability of retolerized T cells to mount an anti-tumor response. In addition, 
+responses to prophylactics are not constant but the significance of this variation remains 
+relatively uninvestigated. Our model suggests that inter-patient variation in prophylactic 
+response can lead to drastically different outcomes for the same dosing of chemotherapy. 
+Across larger samples, this variation can further interact with chemotherapy to be a 
+significant determinant of whether the chemotherapy dose leads to more success or failure 
+across a range of patients.
+In the clinical literature, our model results cautioning about balancing chemotherapy and 
+immunogenic effects has been echoed in multiple situations. Previous studies have explored 
+the mechanisms of action in monoclonal antibody-based treatments including targeting of 
+HER2 [ 62, 63]. When quantifying the impact of antibody-dependent cytotoxicity mediated 
+by CTLs, it was noted that addition of paclitaxel reduced the lasting impact of the immune 
+response generated against the tumor. While in the short term higher doses of 
+chemotherapeutic agents could induce larger tumor reductions, mice that were given both 
+antigen and large chemotherapy doses were more susceptible to tumor rechallenge. 
+Similarly, in radiotherapy it has been found that CTL priming occurs due to antigen-
+dependent cell death [ 64]. However, the addition of even a small amount of paclitaxel was 
+found to induce a significant reduction in CTL numbers. Adjuvant chemotherapy regimens 
+were found to significantly abrogate the immunogenic benefits of radiotherapy-induced 
+immune responses, while immunotherapies increased the efficacies. This result is also 
+significant because it implicitly addresses whether our results might hold when antigen 
+increase, due to cell death, is accounted for. In this mouse model, even with tumor-cell-
+death-mediated antibodies, the loss of T cells leads to a worse overall outcome [ 64]. This 
+presents a natural extension of our framework to be applied to a specific disease and 
+chemotherapy dosing setting. While we created a general model of chemotherapy, there may 
+be interesting dynamics unique to individual cancers that could be explored. It would also 
+allow the employment of more complex pharmacodynamics modeling for specific treatment 
+regimens.
+In conclusion, our results suggest opportunities to increase the efficacy of immunotherapy 
+with precise application of chemotherapy. Our model affirms the importance of CTL and 
+memory T-cell expansion following chemotherapy to reduce immune tolerance to tumor 
+antigens. However, we demonstrate that optimal chemotherapy requires identification of a 
+Goldilocks Window in which treatment can both induce cytotoxic effects in the tumor and 
+enhance the immune response to tumor antigens. Identifying optimal strategies for 
+chemotherapy in each patient will likely benefit from the application of mathematical 
+models which are parameterized by patient data pre-treatment to generate an optimal Park et al. Page 18
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscripttreatment strategy for that patient. Importantly, these predicted strategies would most likely 
+need to change as patient responses diverge from those predicted, leading to an iterative loop 
+of ‘predict-apply-refine’. With the growing drive towards precision medicine, we believe 
+that mathematical models are critical for the future of truly personalized therapy, where no 
+two patients will receive the same therapeutic regimen, and where treatments adapt a change 
+based on patient responses. The model presented here is a step towards describing the 
+complex landscape of treatment decisions regarding dosing and combination of different 
+therapies, and we have shown how these decisions can be sensitive to patient-specific 
+parameters and guide clinical intuition.
+Supplementary Material
+Refer to Web version on PubMed Central for supplementary material.
+Acknowledgements
+D. Park was supported by a 2014 Marshall Scholarship from the Marshall Aid Commemoration Commission of 
+Great Britain. A. R. Anderson, R. A. Gatenby, M. Robertson-Tessi, and K. A. Luddy, were supported by a Physical 
+Sciences-Oncology Center grant from the National Cancer Institute of the United States of America (grant number 
+1U54CA193489) and the Center of Excellence for Evolutionary Therapy at H. Lee Moffitt Cancer Center and 
+Research Institute.
+References
+[1]. Xing Y and Hongquist KA, “T-cell tolerance: central and peripheral.,” Cold Spring Harb Perspect 
+Biol, vol. 4, no. 6, 2012.
+[2]. Nurieva R, Wang J and Sahoo A, “T-cell tolerance in cancer,” Immunotherapy, vol. 5, no. 5, pp. 
+513–531, 2013. [PubMed: 23638746] 
+[3]. Corthay A, “How do Regulatory T Cells Work?,” Scand J Immunol, vol. 70, no. 4, pp. 326–336, 
+2009. [PubMed: 19751267] 
+[4]. Tanaka A and Sakaguchi S, “Regulatory T cells in cancer immunotherapy,” Cell Research, vol. 27, 
+pp. 109–118, 2017. [PubMed: 27995907] 
+[5]. Thomas D and Massgue J, “TGF-beta directly targets cytotoxic T cell functions during tumor 
+evasion of immune surveillance,” Cancer Cell, vol. 8, no. 5, pp. 369–80, 2005. [PubMed: 
+16286245] 
+[6]. McKarns S and Schwarz R, “Distinct effects of TGF-beta 1 on CD4(+) and CD8(+) T cell 
+survival, division, and IL-2 production: A role for T cell intrinsic Smad3,” J Immunol, vol. 174, 
+no. 4, pp. 2071–83, 2005. [PubMed: 15699137] 
+[7]. Takeuchi Y and Nishikawa H, “Roles of regulatory T cells in cancer immunity,” Int Immunol, vol. 
+28, no. 8, pp. 401–9, 2016. [PubMed: 27160722] 
+[8]. Zheng Y , Dou Y , Duan L, Cong C, Gao A, Lai Q and Sun Y , “Using chemo-drugs or irradiation to 
+break immune tolerance and facilitate immunotherapy in solid cancer,” Cellular Immunology, 
+vol. 294, pp. 54–59, 2015. [PubMed: 25687508] 
+[9]. Cook AM, Lesterhuis WJ, Nowak AK and Lake RA, “Chemotherapy and immunotherapy: 
+mapping the road ahead,” Current Opinion in Immunology, vol. 39, pp. 23–29, 2016. [PubMed: 
+26724433] 
+[10]. Hodge JW, Garnett CT, Farsaci B, Palena C, Tsang K-Y , Ferrone S and Gameiro SR, 
+“Chemotherapy-induced immunogenic modulation of tumor cells enhances killing by cytotoxic T 
+lymphocytes and is distinct from immunogenic cell death,” International Journal of Cancer, vol. 
+133, pp. 624–636, 3 2013. [PubMed: 23364915] Park et al. Page 19
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscript[11]. Bracci L, Schiavoni G, Sistigu A and Belardelli F, “ Immune-based mechanisms of cytotoxic 
+chemotherapy: implications for the design of novel and rationale-based combined treatments 
+against cancer,” Cell Death and Differentiation, vol. 21, pp. 15–25, 2014. [PubMed: 23787994] 
+[12]. Tchao NK and Turka LA, “Lymphodepletion and Homeostatic Proliferation: Implications for 
+Transplantation,” American Journal of Transplantation, vol. 12, pp. 1079–1090, 3 2012. 
+[PubMed: 22420320] 
+[13]. Wrzensinski C, Paulos C, Kaiser A, Muranski P, Palmer D, Gattinoni L, Yu Z, Rosernberg S and 
+Restifo N, “Increased intensity lymphodepletion enhances tumor treatment efficacy of adoptively 
+transferred tumor-specific T cells,” J Immunother, vol. 33, no. 1, pp. 1–7, 2010. [PubMed: 
+19952961] 
+[14]. Gameiro SR, Caballero JA, Higgins JP, Apelian D and Hodge JW, “Exploitation of differential 
+homeostatic proliferation of T-cell subsets following chemotherapy to enhance the efficacy of 
+vaccine-mediated antitumor responses,” Cancer Immunol Immunother, vol. 60, no. 9, pp. 1227–
+1242, 2011. [PubMed: 21544650] 
+[15]. Marco MR, Dons EM, van der Windt DJ, Bhama JK, Lu LT, Zahorchak AF, Lakkis FG, Cooper 
+DK, Ezzelerab MB and Thomson AW, “Post-transplant repopulation of naïve and memory T cells 
+in blood and lymphoid tissue after alemtuzumab-mediated depletion in heart-transplanted 
+cynomolgus monkeys,” Transpl Immunol, vol. 29, no. 1–4, pp. 88–98, 2013. [PubMed: 
+24120957] 
+[16]. Althaus C, Ganusov V and De Boer R, “Dynamics of CD8(+) T cell responses during acute and 
+chronic lymphocytic choriomeningitis,” J Immunol, vol. 17, no. 9, pp. 2944–51, 2007.
+[17]. Schwarz RH, “Historical Overview of Immunological Tolerance,” Cold Spring Harb Perspect 
+Biol, vol. 4, no. 4, 2012.
+[18]. Alizadeh D and Larmonier N, “Chemotherapeutic Targeting of Cancer-Induced 
+Immunosuppressive Cells,” Cancer Research, vol. 74, pp. 2663–2668, 4 2014. [PubMed: 
+24778417] 
+[19]. Lutsiak MEC, “Inhibition of CD425 T regulatory cell function implicated in enhanced immune 
+response by low-dose cyclophosphamide,” Blood, vol. 105, pp. 2862–2868, 4 2005. [PubMed: 
+15591121] 
+[20]. Dummer W, Niethammer AG, Baccala R, Lawson BR, Wagner N, Reisfeld RA and 
+Theofilopoulos AN, “T cell homeostatic proliferation elicits effective antitumor autoimmunity,” 
+Journal of Clinical Investigation, vol. 110, pp. 185–192, 7 2002. [PubMed: 12122110] 
+[21]. Schietinger A, Delrow JJ, Basom RS, Blattman JN and Greenberg PD, “Rescued Tolerant CD8 T 
+Cells Are Preprogrammed to Reestablish the Tolerant State,” Science, vol. 335, pp. 723–727, 1 
+2012. [PubMed: 22267581] 
+[22]. Kline J, Brown IE, Zha Y-Y , Blank C, Strickler J, Wouters H, Zhang L and Gajewski TF, 
+“Homeostatic Proliferation Plus Regulatory T-Cell Depletion Promotes Potent Rejection of B16 
+Melanoma,” Clinical Cancer Research, vol. 14, pp. 3156–3167, 5 2008. [PubMed: 18483384] 
+[23]. Meir H, Nout RA, Welters MJP, Loof NM, Kam ML, Ham JJ, Samuels S, Kenter GG, Cohen AF, 
+Melief CJM, Burggraaf J, Poelgeest MIE and Burg SH, “Impact of (chemo)radiotherapy on 
+immune cell composition and function in cervical cancer patients,” OncoImmunology, vol. 6, p. 
+e1267095, 2 2017. [PubMed: 28344877] 
+[24]. Wilkie KP and Hahnfeldt P, “Modeling the Dichotomy of the Immune Response to Cancer: 
+Cytotoxic Effects and Tumor-Promoting Inflammation,” Bulletin of Mathematical Biology, vol. 
+79, pp. 1426–1448, 6 2017. [PubMed: 28585066] 
+[25]. Lai X and Friedman A, “Combination therapy of cancer with cancer vaccine and immune 
+checkpoint inhibitors: A mathematical model,” PLOS ONE, vol. 12, p. e0178479, 5 2017. 
+[PubMed: 28542574] 
+[26]. Eftimie R, Dushoff J, Bridle BW, Bramson JL and Earn DJD, “Multi-Stability and Multi-
+Instability Phenomena in a Mathematical Model of Tumor-Immune-Virus Interactions,” Bulletin 
+of Mathematical Biology, vol. 73, pp. 2932–2961, 4 2011. [PubMed: 21476110] 
+[27]. Ledzewicz U, Naghnaeian M and Schättler H, “Optimal response to chemotherapy for a 
+mathematical model of tumor–immune dynamics,” Journal of Mathematical Biology, vol. 64, pp. 
+557–577, 5 2011. [PubMed: 21553244] Park et al. Page 20
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscript[28]. DePillis L, Gallegos A and Radunskaya A, “A Model of Dendritic Cell Therapy for Melanoma,” 
+Frontiers in Oncology, vol. 3, 2013.
+[29]. Robertson-Tessi M, El-Kareh A and Goriely A, “ A mathematical model of tumor-immune 
+interactions.,” Journal of Theoretical Biology, vol. 294, pp. 56–73, 2012. [PubMed: 22051568] 
+[30]. De Pillis LG and Radunskaya A, “The dynamics of an optimally controlled tumor model: A case 
+study,” Mathematical and Computer Modelling, vol. 37, no. 11, pp. 1221–1244, 2003.
+[31]. Hinow P, Gerlee P, McCawley LJ, Quaranta V , Ciobanu M, Wang S, Graham JM, Ayati BP, 
+Claridge J, Swanson KR, Loveless M and Anderson ARA, “A spatial model of tumor-host 
+interaction: application of chemotherapy.,” Mathematical biosciences and engineering : MBE, 
+vol. 6, no. 3, pp. 521–546, 7 2009. [PubMed: 19566124] 
+[32]. Hamis S, Powathil GG and Chaplain MAJ, “Blackboard to Bedside: A Mathematical Modeling 
+Bottom-Up Approach Toward Personalized Cancer Treatments.,” JCO Clin Cancer Inform, no. 3, 
+pp. 1–11, 2019.
+[33]. Cheung KP, Yang E and Goldrath AW, “Memory-Like CD8 T Cells Generated during 
+Homeostatic Proliferation Defer to Antigen-Experienced Memory Cells,” The Journal of 
+Immunology, vol. 183, pp. 3364–3372, 8 2009. [PubMed: 19675163] 
+[34]. Diefenbach A, Jensen E, Jamieson A and Raulet D, “ Rae1 and H60 ligands of the NKG2D 
+receptor stimulate tumour immunity.,” Nature, vol. 413, pp. 165–71, 2001. [PubMed: 11557981] 
+[35]. Halle S, Keyser AS, Stahl FR and e. al., “In Vivo Killing Capacity of Cytotoxic T Cells Is 
+Limited and Involves Dynamic Interactions and T Cell Cooperativity,” Immunity, vol. 44, no. 2, 
+pp. 233–245, 2016. [PubMed: 26872694] 
+[36]. Gattinoni L, Finkelstein S, Klebanoff C, Antony P, Palmer D and Spess P, “Removal of 
+homeostatic cytokine sinks by lymphodepletion enhances the efficacy of adoptively transferred 
+tumor-specific CD8(+) T cells.,” Journal of Experimental Medicine, vol. 202, 2005.
+[37]. Sakaguchi S, Wing K, Onishi Y , Prieto-Martin P and Yamaguchi T, “Regulatory T cells: how do 
+they suppress immune responses?,” International Immunology, vol. 21, pp. 1105–1111, 9 2009. 
+[PubMed: 19737784] 
+[38]. Cui W and Kaech S, “ Generation of effector CD8+T cells and their conversion to memory T 
+cells.,” Immunological Reviews, vol. 236, pp. 151–66, 2010. [PubMed: 20636815] 
+[39]. Vignali DAA and Collison LWWCJ, “How regulatory T cells work,” Nat Rev Immunol, vol. 8, 
+no. 7, pp. 523–532, 2008. [PubMed: 18566595] 
+[40]. Bains I, Antia R, Callard R and Yates A, “Quantifying the development of the peripheral naive 
+CD4(+) T-cell pool in humans.,” Blood, vol. 113, pp. 5480–7, 2009. [PubMed: 19179300] 
+[41]. Richert-Spuhler LE and Lund JM, “The Immune Fulcrum: Regulatory T Cells Tip the Balance 
+Between Pro- and Anti-inflammatory Outcomes upon Infection,” Prog Mol Biol Transl Sci, vol. 
+136, pp. 217–243, 2015. [PubMed: 26615099] 
+[42]. Antony P, Piccirillo C, Akpinarli A, Finkelstein S, Speiss P, Surman D, Palmer D, Chan C, 
+Klebanoff C, Overwijk W, Rosenberg S and Restifo N, “CD8+ T cell immunity against a tumor/
+self-antigen is augmented by CD4+ T helper cells and hindered by naturally occurring T 
+regulatory cells.,” J Immunol, vol. 5, no. 174, pp. 2591–601, 2005.
+[43]. Lythe G, Callard RE, Hoare RL and Molina-Paris C, “How many TCR clonotypes does a body 
+maintain?,” J Theor Biol, no. 389, pp. 214–224, 2016. [PubMed: 26546971] 
+[44]. Kufe DW and Major PP, “5-fluorouracil incorporation into human breast carcinoma RNA 
+correlates with cytotoxicity,” J. Biol. Chem, vol. 256, no. 19, pp. 9802–9805, 1981. [PubMed: 
+7275977] 
+[45]. Arancia G, Calcabrini A, Meschini S and Molinari A, “Intracellular distribution of anthracyclines 
+in drug resistant cells,” Cytotechnology, vol. 27, pp. 95–111, 1998. [PubMed: 19002786] 
+[46]. Hao J, Madigan M, Khatri A, Power C, Hung T, Beretov J, Chang L, Xiao W, Cozzi P, Graham P, 
+Kearsley J and Li Y , “In Vitro and In Vivo Prostate Cancer Metastasis and Chemoresistance Can 
+Be Modulated by Expression of either CD44 or CD147,” PLoS One, vol. 7, no. 8, p. e40716, 
+2012. [PubMed: 22870202] 
+[47]. Jain R, Lee J, Ng C, Hong D, Gong J, Naing A and e. al., “Change in Tumor Size by RECIST 
+Correlates Linearly With Overall Survival in Phase I Oncology Studies.,” Journal of Clinical 
+Oncology, vol. 30, pp. 2684–90, 2012. [PubMed: 22689801] Park et al. Page 21
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscript[48]. Arstila T, Casrouge A, Baron V , Even J, Kanellopoulos J and Kourilsky P, “A direct estimate of 
+the human alphabeta T cell receptor diversity,” Science, vol. 286, no. 5441, pp. 958–61, 1999. 
+[PubMed: 10542151] 
+[49]. Robertson-Tessi M, Gillies R, Gatenby R and Anderson A, “Impact of Metabolic Heterogeneity 
+on Tumor Growth, Invasion, and Treatment Outcomes.,” Cancer Research, vol. 75, pp. 1567–79, 
+2015. [PubMed: 25878146] 
+[50]. Plosker G, “Sipuleucel-T In Metastatic Castration-Resistant Prostate Cancer,” Drugs, vol. 71, no. 
+1, pp. 101–8, 2011. [PubMed: 21175243] 
+[51]. Sheikh N, Cham J, Zhang L, DeVries T, Letarte S, Pufnock J and e. al., “ Clonotypic 
+Diversification of Intratumoral T Cells Following Sipuleucel-T Treatment in Prostate Cancer 
+Subjects,” Cancer Research, vol. 76, pp. 3711–8, 2016. [PubMed: 27216195] 
+[52]. Merad M and Manz M, “ Dendritic cell homeostasis.,” Blood, vol. 113, pp. 3418–27, 2009. 
+[PubMed: 19176316] 
+[53]. Crawford J, Dale D and Lyman G, “ Chemotherapy-induced neutropenia - Risks, consequences, 
+and new directions for its management.,” Cancer, vol. 100, pp. 228–37, 2004. [PubMed: 
+14716755] 
+[54]. Wang H, Li M, Rinehart J and Zhang R, “Dexamethasone as a chemoprotectant in cancer 
+chemotherapy: hematoprotective effects and altered pharmacokinetics and tissue distribution of 
+carboplatin and gemcitabine.,” Cancer Chemotherapy and Pharmacology, vol. 53, no. 6, pp. 459–
+67, 2004. [PubMed: 14752578] 
+[55]. Tischer BCE,S, Lahrberg J, Oelke M, Figueiredo C, Blasczyk R and Eiz-Vesper B, “Granulocyte 
+colony‐stimulating factor impairs CD8+ T cell functionality by interfering with central activation 
+elements,” Clin. Exp Immunol, vol. 185, no. 1, pp. 107–118, 2016. [PubMed: 26990855] 
+[56]. Freyer G, Jovenin N, Yazbek G, Villanueva C, Hussain A, Berthune A and e. al., “Granocyte-
+colony Stimulating Factor (G-CSF) Has Significant Efficacy as Secondary Prophylaxis of 
+Chemotherapy-induced Neutropenia in Patients with Solid Tumors,” Anticancer Res, vol. 33, no. 
+1, pp. 301–7, 2013. [PubMed: 23267161] 
+[57]. Lugada ES, Mermin J, Kaharuza F, Ulvestad E, Were W, Lageland N, Asjo B, Malamba S and 
+Downing R, “Population-Based Hematologic and Immunologic Reference Values for a Healthy 
+Ugandan Population,” Clin. Diagn. Lab. Immunol, vol. 11, no. 1, pp. 29–34, 2004. [PubMed: 
+14715541] 
+[58]. Kim R, Emi M and Tanabe K, “Cancer immunoediting from immune surveillance to immune 
+escape,” Immunology, vol. 121, pp. 1–14, 2007. [PubMed: 17386080] 
+[59]. Makkouk A and Weiner G, “ Cancer Immunotherapy and Breaking Immune Tolerance: New 
+Approaches to an Old Challenge.,” Cancer Research, vol. 75, pp. 5–10, 2015. [PubMed: 
+25524899] 
+[60]. Guo H and Tsung K, “Tumor reductive therapies and antitumor immunity,” Oncotarget, vol. 8, 
+no. 33, p. 55736–55749, 2017. [PubMed: 28903456] 
+[61]. Mehta HM, Malandra M and J CS, “G-CSF and GM-CSF in Neutropenia,” J Immunol, vol. 195, 
+no. 4, pp. 1341–1349, 2015. [PubMed: 26254266] 
+[62]. Park S, Jiang Z, Mortenson ED, Deng L, Radkevich-Brown O, Yang X, Sattar H, Wang Y , Brown 
+NK, Greene M, Liu Y , Tang J, Wang S and Fu Y-X, “The Therapeutic Effect of Anti-HER2/neu 
+Antibody Depends on Both Innate and Adaptive Immunity,” Cancer Cell, vol. 18, no. 2, pp. 160–
+170, 2010. [PubMed: 20708157] 
+[63]. Ferris RL, Jaffee EM and Ferrone S, “Tumor Antigen–Targeted, Monoclonal Antibody–Based 
+Immunotherapy: Clinical Response, Cellular Immunity, and Immunoescape,” J. Clin. Oncol, vol. 
+28, no. 28, pp. 4390–4399, 2010. [PubMed: 20697078] 
+[64]. Lee Y , Auh SL, Wang Y , Burnette B, Wang Y , Meng Y , Beckett M, Sharma R, Chin R, Tu T, 
+Weichselbaum RR and Fu Y-X, “Therapeutic effects of ablative radiation on local tumor require 
+CD8+ T cells: changing strategies for cancer treatment,” Blood, vol. 114, pp. 589–595, 2009. 
+[PubMed: 19349616] Park et al. Page 22
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptStatement of Significance
+To maximize the synergy between chemotherapy and anti-tumor immune response, 
+lymphodepleting therapy must be balanced in a ‘Goldilocks Window’ of optimal dosing.Park et al. Page 23
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptFigure 1: 
+Tumor-immune dynamics during the sensitive (A) and tolerant (B) stages of the immune 
+response. During antigen-sensitive immune expansion, CTLs are recruited from memory 
+cells to attack tumor cells. Tregs are being recruited but have not yet started significantly 
+inhibiting CTL responses. During immune contraction once tolerance sets in, Tregs exert an 
+active inhibitory pressure on CTLs. Expansion of memory cells into CTLs ceases. Both 
+stages of the immune response are characterized by competition between memory and naïve Park et al. Page 24
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptimmune cells for common cytokine pools as well as homeostatic proliferation and 
+lymphopoiesis.Park et al. Page 25
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptFigure 2: 
+Interaction of memory-cell populations and chemotherapy strength on treatment outcomes. 
+RECIST outcomes are shown in panel A with progressive disease (red), stable disease 
+(yellow), partial response (light blue) and complete response (dark blue). (B) Finer grade 
+responses are shown as percent changes in tumor size after therapy versus the initial starting 
+size (108 cells). The underlying dynamic reasons for these differences can be seen in the 
+memory populations during low (C) and high dose chemotherapy (D). Low dose 
+chemotherapy allows memory populations (light blue) to be sustained for longer and 
+generate larger CTL responses (green). High dose chemotherapy, however, depletes memory 
+cells faster and leads to declining CTL responses and concurrent tumor escape.Park et al. Page 26
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptFigure 3: 
+Treatment outcomes for variation in tumor growth rate (A and B) and CTL efficacy (C and 
+D). Panels A and C represent RECIST outcomes. Red is progressive disease (PD), dark blue 
+is complete response (CR), light blue is partial response (PR) and yellow is stable disease 
+(SD). Treatment outcomes with faster growing tumors are more sensitive to maintaining 
+chemotherapy dosing in the Goldilocks Window. For slower growing tumors, treatment 
+outcomes are more successful and less sensitive to dose. Similarly, more efficient patient 
+CTLs lead to more successful outcomes and have less dependence on chemotherapy. 
+However, outcomes become more sensitive to dosing for patients with less efficiently killing 
+CTLs.Park et al. Page 27
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptFigure 4: 
+Improvements in tumor reduction due to vaccine application. Panel A shows the RECIST 
+responses achieved for different vaccine strengths and chemotherapy strengths with black 
+being the non-vaccine baseline. Vaccine strengths ( v) are 1 (blue), 10 (green), 100 (red), 
+1000 (light blue). Larger vaccine strengths lead to more successful RECIST responses for 
+stronger chemotherapy doses. When looking at the absolute number of improvement in 
+cellular reduction (B), a window of optimal chemotherapy ranges appears. Only when 
+chemotherapy is in this range can vaccines provide a significant additional benefit.Park et al. Page 28
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptFigure 5: 
+Therapeutic effects of differential response to immune prophylactics. (A) Final tumor sizes 
+are shown for three different chemotherapy regimes ( C = 0.25 as blue, C = 0.6 as green, and 
+C = 0.9 as red)  for a range of immune modifier efficacies ( h). The asterisk denotes that 
+simulations were only run up to this h value for the highest dose chemotherapy. The dotted 
+line represents the tumor size at the start of therapy. (B) Cohorts are treated with these 
+differing regimes of high and low chemotherapy, showing significant differences in the 
+proportion of successful versus unsuccessful responders.Park et al. Page 29
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptFigure 6: 
+A diagram explaining tumor outcomes at varying chemotherapy strengths and immune 
+support doses. If therapy is too weak, then immune stimulation cannot be maximally 
+effective and direct chemotherapy-mediated tumor cell death is also low. This yields a 
+suboptimal tumor reduction. When chemotherapy is too strong, there may be more tumor 
+cell death due to the drug, but insufficient immune activation due to over depletion of T 
+cells. There is a moderate dose, however, that represents a Goldilocks Window of 
+maximizing both T-cell activation as well as drug-induced tumor cell death. This range of 
+dosing provides at least a 20% reduction in tumor size (relative to the initial tumor size of 
+108 cells).Park et al. Page 30
+Cancer Res . Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptAuthor Manuscript Author Manuscript Author Manuscript Author ManuscriptPark et al. Page 31
+Table 1:
+Model parameters were estimated based upon both pre-existing models, chiefly Althaus et al.,  2007  and 
+Robertson-Tessi et al.,  2012 , as well as experimental studies. For some parameters, the literature often 
+indicated significant variation, so order-of-magnitude approximations were made. Similarly, certain 
+parameters were not succinctly captured in literature studies and were therefore estimated (*). We have 
+addressed the impact of potential parameter variation through sensitivity studies (see Results).
+Parameter Symbol Value Literature reference
+Tumor Growth Coefficient rT 1000 cells1-m day−1 [29]
+CTL kill rate k0 1 day−1 [34], [35]
+Treg suppression efficacy b 0.75 [29]
+Tumor growth transition size Ttrans 106 cells [49]
+Power-Law growth exponent m 0.5 [29]
+Exponential to power smoothing term P 3.0 [29]
+Time till immune contraction toff 4–8 days [16] [8] [14]
+Maximum sustainable number of effector, naïve, and memory cells Emax 1012 cells [40]
+Tumor antigenicity α 1* [29]
+CTL death/ apoptosis rate δE 0.05* [39]
+CTL contraction rate ρ 0.13 [16]
+CTL contraction augmentation due to Tregs c 0.01* [29]
+Memory cell expansion factor γ 100* [16, 48]
+Tumor-mediated Treg recruitment rate σ 0.01 [42, 29]
+Treg death rate δR 0.1* [29]
+Memory cell growth rate rM 0.01 day−1* [40]
+Memory cell reconversion rate ω 0.01* [40]
+Naïve cell growth rate rN 0.1 day−1 [40]
+Maximum number of naïve T cells and memory cells Kmax 1012 cells [43]
+Baseline chemotherapy strength C0 Varied in simulation
+Cancer Res . Author manuscript; available in PMC 2020 April 15.

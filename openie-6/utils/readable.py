@@ -14,7 +14,7 @@ import math
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--format", default='allennlp')
+    parser.add_argument("--format", default='openiefive')
     parser.add_argument("--inp_fp")
     parser.add_argument("--out_fp")
     parser.add_argument("--threshold", type=float)

@@ -113,7 +113,7 @@ total_rows = []
 #         total_rows.append(row)
 #     return arash, total_rows
 
-# New implementation using Stanza/CoreNLP
+# New implementation using OpenIE 6
 
 def HELPER_to_extract(sent, row):# = extractors):# None):
 
@@ -130,8 +130,13 @@ def HELPER_to_extract(sent, row):# = extractors):# None):
         # Call OpenIE6 on our saved files
         os.chdir("openie-6")
         os.system(f'conda activate openie6')
-        os.system(f'python run.py --save models/oie_model --mode predict --model_str bert-base-cased --task oie --gpus 0 --inp /home/derek/auto-nlp/auto-nlp-drive/text/nihms-1536901.txt --out /home/derek/auto-nlp/auto-nlp-drive/text/predictions.txt')
+        os.system(f'/home/derek/anaconda3/envs/openie6/bin/python run.py --save models/oie_model --mode predict --model_str bert-base-cased --task oie --gpus 0 --inp /home/derek/auto-nlp/auto-nlp-drive/text/nihms-1536901-sentences.txt --out /home/derek/auto-nlp/auto-nlp-drive/text/predictions.txt')
         
+        with open(openie6_outfile, 'r') as f:
+
+            
+
+
         for res in results:
             for arg2 in res["extraction"]["arg2s"]:
                 arash.append([res["extraction"]["arg1"]["text"], \

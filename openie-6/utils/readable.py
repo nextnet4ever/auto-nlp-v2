@@ -133,6 +133,7 @@ def allennlp_reader(input_filename, output_filename, threshold, systems):
         # break
 
 def openiefive_reader(input_filename, output_filename, threshold):
+    print("openiefive reader called")
     f=open(input_filename, 'r')
     lines=f.readlines()
     f.close()
@@ -181,14 +182,14 @@ def openiefive_reader(input_filename, output_filename, threshold):
         if context!=None:
             pred += " Context : " + context + " ; "
 
-        pred += arg1 + " ; " + rel
+        pred += "ARG1:" + arg1 + " ; REL:" + rel
         
         if arg2!=None:
-            pred += " ; " + arg2 
+            pred += " ; ARG2:" + arg2 
         if location!=None:
-            pred += " ; L : " + location
+            pred += " ; LOC:" + location
         if time!=None:
-            pred += " ; T : " + time
+            pred += " ; TIME:" + time
         
         pred += ")"
         # print(line)
@@ -200,6 +201,7 @@ def openiefive_reader(input_filename, output_filename, threshold):
         else:
             extractions[sentence] = [(pred ,confidence)]
 
+    print("OpenIE5")
     for sent in extractions.keys():
         print(sent)
         for tup in extractions[sent]:
@@ -245,6 +247,8 @@ def gold_reader(input_filename, output_filename):
         # print()
 
 if __name__ == '__main__':
+
+    print("Readable.py is called")
     parser = parse_args()
     args = parser.parse_args()
 
@@ -255,6 +259,7 @@ if __name__ == '__main__':
             args.out_fp = args.inp_fp + '.txt'
     print('writing to ',args.out_fp,' ...')
 
+    print("args.format is " + args.format)
     if args.format =='gold':
         gold_reader(args.inp_fp, args.out_fp)
     

@@ -118,9 +118,12 @@ def test(hparams, checkpoint_callback, meta_data_vocab, train_dataloader, val_da
     shutil.move(hparams.save+f'/logs/test.part', hparams.save+f'/logs/test')
 
 def predict(hparams, checkpoint_callback, meta_data_vocab, train_dataloader, val_dataloader, test_dataloader, all_sentences, mapping=None, conj_word_mapping=None):
+
+    print("Prediction called")
     if hparams.task == 'conj':
         hparams.checkpoint = hparams.conj_model
     if hparams.task == 'oie':
+        print("Task is oie")
         hparams.checkpoint = hparams.oie_model
         
     checkpoint_paths = get_checkpoint_path(hparams)
@@ -131,6 +134,7 @@ def predict(hparams, checkpoint_callback, meta_data_vocab, train_dataloader, val
     else:
         loaded_hparams_dict = torch.load(checkpoint_path, map_location=torch.device('cpu'))['hparams']
     current_hparams_dict = vars(hparams)
+    #print(current_hparams_dict)
     loaded_hparams_dict = data.override_args(loaded_hparams_dict, current_hparams_dict, sys.argv[1:])
     loaded_hparams = data.convert_to_namespace(loaded_hparams_dict)
     model = Model(loaded_hparams, meta_data_vocab)
@@ -454,8 +458,10 @@ def main(hparams):
                                   collate_fn=data.pad_data, shuffle=True, num_workers=1)
     val_dataloader = DataLoader(val_dataset, batch_size=hparams.batch_size, collate_fn=data.pad_data, num_workers=1)
     test_dataloader = DataLoader(test_dataset, batch_size=hparams.batch_size, collate_fn=data.pad_data, num_workers=1)
-
+    print("Processes are:")
     for process in hparams.mode.split('_'):
+        
+        print(process)
         globals()[process](hparams, checkpoint_callback, meta_data_vocab, 
                            train_dataloader, val_dataloader, test_dataloader, all_sentences)
 

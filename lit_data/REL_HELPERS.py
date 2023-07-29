@@ -128,13 +128,36 @@ def HELPER_to_extract(sent, row):# = extractors):# None):
         # New implementation using OpenIE6
     
         # Call OpenIE6 on our saved files
-        os.chdir("openie-6")
-        os.system(f'conda activate openie6')
-        os.system(f'/home/derek/anaconda3/envs/openie6/bin/python run.py --save models/oie_model --mode predict --model_str bert-base-cased --task oie --gpus 0 --inp /home/derek/auto-nlp/auto-nlp-drive/text/nihms-1536901-sentences.txt --out /home/derek/auto-nlp/auto-nlp-drive/text/predictions.txt')
+        os.system(f'/home/derek/anaconda3/envs/openie6/bin/python run.py --save models/oie_model --mode splitpredict --model_str bert-base-cased --task oie --gpus 0 --inp /home/derek/auto-nlp/auto-nlp-drive/text/sample_text.txt --out /home/derek/auto-nlp/auto-nlp-drive/text/predictions.txt')
         
-        with open(openie6_outfile, 'r') as f:
+        with open(openie6_json_outfile, 'r') as f:
 
-            
+            text = f.readlines()
+
+            # Now we need to evaluate sentence by sentence
+            this_chunk_extractions = []
+            for line in text:
+                
+                if line == "\n":
+                    this_chunk_extractions = []
+                else:
+
+                    # A few tests to make sure that this line is a
+                    conf_match = re.findall(r"\d.\d\d", line)
+                    starts_with_confidence = False
+                    if len(conf_match) == 1:
+                        starts_with_confidence = True
+                    
+                    # Make sure that there's an extraction here
+                    ext_match = re.
+                    
+                    
+
+                    # This starts with a confidence.
+                    if len(match) > 0:
+                        this_confidence = float(match[0])
+                        match[0]
+
 
 
         for res in results:

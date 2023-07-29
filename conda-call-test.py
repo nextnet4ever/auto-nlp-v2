@@ -11,4 +11,4 @@ os.chdir('openie-6')
 #os.system(f'conda activate openie6')
 
 #call_other_environment(run.py, )
-os.system(f'/home/derek/anaconda3/envs/openie6/bin/python run.py --save models/oie_model --mode predict --model_str bert-base-cased --task oie --gpus 0 --inp /home/derek/auto-nlp/auto-nlp-drive/text/nihms-1536901-sentences.txt --out /home/derek/auto-nlp/auto-nlp-drive/text/predictions.txt')
+os.system(f'/home/derek/anaconda3/envs/openie6/bin/python run.py --save models/oie_model --mode splitpredict --model_str bert-base-cased --task oie --gpus 0 --inp /home/derek/auto-nlp/auto-nlp-drive/text/sample_text.txt --out /home/derek/auto-nlp/auto-nlp-drive/text/predictions.txt')

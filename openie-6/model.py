@@ -32,6 +32,11 @@ import threading
 from threading import Thread
 sem = threading.Semaphore()
 
+
+
+
+import json
+
 # prevents printing of model weights, etc
 logging.getLogger('transformers.configuration_utils').setLevel(logging.ERROR)
 logging.getLogger('transformers.modeling_utils').setLevel(logging.ERROR)
@@ -107,6 +112,8 @@ class Model(pl.LightningModule):
             return [optimizer]
 
     def forward(self, batch, mode='train', batch_idx=-1, constraints=None, cweights=None):
+
+        print("Forward called")
         if self.hparams.wreg != 0 and not hasattr(self, '_initial_parameters'):
             self._initial_parameters = copy.deepcopy(
                 dict(self.named_parameters()))
@@ -430,6 +437,11 @@ class Model(pl.LightningModule):
                     return True
             return False
         output['meta_data'] = [self._meta_data_vocab.itos[m] for m in output['meta_data']]
+
+
+
+        # Collating results of Open Information Extraction Task starts here
+
         if task == 'oie':
             predictions = output['predictions']
             sentences = output['meta_data']
@@ -461,27 +473,69 @@ class Model(pl.LightningModule):
                         else:
                             if not contains_extraction(pro_extraction, all_predictions[orig_sentence]):
                                 all_predictions[orig_sentence].append(pro_extraction)
+
+
+
+                                # This is where the results are constructed
+
+
+
+
             all_pred = []
             all_pred_allennlp = []
+            all_pred_json = []
+
+            context = ["", "", ""] # Context is the 3 precending sentences along w/ this sentence
+            context_index = 0
             for example_id, sentence in enumerate(all_predictions):
+               
+                
                 predicted_extractions = all_predictions[sentence]
                 # if 'predict' in self.hparams.mode: # write only the results in text file
                 sentence_str = f'{sentence}\n'
+                context.append(sentence.replace(" .", ".").strip())
+                context_str = " ".join(context)
+                print("Context is: " + context_str + "\n==================")
+
+                del(context[0]) # This brings context back to 3 sentences for the next sentence
                 for extraction in predicted_extractions:
                     if self.hparams.type == 'sentences':
                         ext_str = data.ext_to_sentence(extraction) + '\n'
                     else:
                         ext_str = data.ext_to_string(extraction) + '\n'
+                    
+                    # print(json.dumps(extraction))
                     sentence_str += ext_str
                 all_pred.append(sentence_str)
+                print("\n\nSentence is: " + str(sentence_str))
                 sentence_str_allennlp = ''
+
+                sentence_json = {"sentence": sentence.replace(" .", ".").strip(),
+                                 "context" : context_str,
+                                 "extractions" : []}
+
                 for extraction in predicted_extractions:
+                    
+                    # AllenNLP object
                     args1 = ' '.join(extraction.args[1:])
                     ext_str = f'{sentence}\t<arg1> {extraction.args[0]} </arg1> <rel> {extraction.pred} </rel> <arg2> {args1} </arg2>\t{extraction.confidence}\n'
                     sentence_str_allennlp += ext_str
                     sentence_str_allennlp.strip('\n')
+
+
+                    # json object
+                    ext_json = {'arg1': extraction.args[0],
+                                'rel': extraction.pred,
+                                'arg2': args1,
+                                'confidence': extraction.confidence}
+                    sentence_json["extractions"].append(ext_json)
+                
+                all_pred_json.append(sentence_json)
                 all_pred_allennlp.append(sentence_str_allennlp)
             self.all_predictions_oie.extend(all_pred)
+
+
+
         if task =='conj':
             example_id, correct = 0, True
             total1, total2 = 0, 0
@@ -492,6 +546,12 @@ class Model(pl.LightningModule):
             all_pred = []
             all_conjunct_words = []
             all_sentence_indices = []
+
+
+            # This is where the results are written to file!!!!!!!!!!!!!!
+
+
+
             for idx in range(len(meta_data)):
                 example_id += 1
                 sentence = meta_data[idx]
@@ -503,6 +563,7 @@ class Model(pl.LightningModule):
                     sentence_predictions.append(depth_predictions)
                 pred_coords = metric.get_coords(sentence_predictions)
 
+                print("Sentence is: " + str(sentence))
                 words = sentence.split()
                 sentence_str = sentence+'\n'
                 split_sentences, conj_words, sentences_indices = data.coords_to_sentences(
@@ -517,18 +578,41 @@ class Model(pl.LightningModule):
             self.all_conjunct_words_conj.extend(all_conjunct_words)
             self.all_predictions_conj.extend(all_pred)
             self.all_sentence_indices_conj.extend(all_sentence_indices)
+        
+        
+        # The actual step of writing to file
         if self.hparams.out != None:
             directory = os.path.dirname(self.hparams.out)
             if directory != '' and not os.path.exists(directory):
                 os.makedirs(directory)
             out_fp = f'{self.hparams.out}.{self.hparams.task}'
-            # print('Predictions written to ', out_fp)
+            print('Predictions written to ', out_fp)
             if batch_idx == 0:
                 predictions_f = open(out_fp,'w')
             else:
                 predictions_f = open(out_fp,'a')
             predictions_f.write('\n'.join(all_pred)+'\n')
             predictions_f.close()
+
+            if task == "oie":
+
+                out_fp_json = out_fp + ".json"
+
+                if batch_idx == 0:
+                    predictions_json = all_pred_json
+                else:
+                    with open(out_fp_json, 'r') as jfile: 
+                        predictions_json = json.load(jfile)
+                    
+                    predictions_json.append(all_pred_json)
+                
+                with open(out_fp_json, 'w') as jfile:
+                    json.dump(predictions_json, jfile, indent=2)
+
+            
+            
+
+
         if task == 'oie' and self.hparams.write_allennlp:
             if batch_idx == 0:
                 predictions_f_allennlp = open(f'{self.hparams.out}.allennlp', 'w')

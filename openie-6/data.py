@@ -298,8 +298,10 @@ def pad_data(data):
 
 
 def ext_to_string(extraction):
+    ext_str_json = {}
     ext_str = ''
     ext_str = f'{extraction.confidence:.02f}: ({extraction.args[0]}; {extraction.pred})'
+    
     if len(extraction.args) >= 2:
         ext_str = f'{ext_str[:-1]}; {"; ".join(extraction.args[1:])})'
     return ext_str
@@ -309,6 +311,8 @@ def ext_to_sentence(extraction):
     ext_str = f'{extraction.args[0]} {extraction.pred}'
     if len(extraction.args) >= 2:
         ext_str = f'{ext_str} {" ".join(extraction.args[1:])}'
+
+    
     return ext_str
 
 

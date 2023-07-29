@@ -1,0 +1,85 @@
+This was first characterized in the post-transplant setting where memory T cells lose peripheral tolerance during homeostatic repopulation, leading to graft rejection [ 12].
+Chemotherapy-induced tolerance breaking is dynamic and transient, often requiring treatment breaks to achieve full effect.
+ Various studies report that regulatory cells return 5–10 days posttreatment [ 8].
+ Homeostatic repopulation following moderate lymphopenia can fully restore the lymphocyte pool as early as 4 days following therapy in murine models [14].
+ Even in the case of nearly complete lymphodepletion using Alemtuzumab in non-human primate transplant models, the T-cell pool is completely restored in 8 weeks, consisting of 96% memory T cells [ 15].
+ An obvious question then arises: is there an optimal chemotherapy schedule that could maximize tumor kill and also enhance immune response?To investigate this question, we created a mathematical model of the complex tumor-immune dynamics that occur during multiple cycles of chemotherapy.
+ In particular, we investigated three, clinically relevant, therapeutic dynamics: immunodepletion, immunostimulation via vaccination, and immunosupportive prophylactics.
+ We identified significant immune trade-offs during chemotherapy as well as the relevant patient metrics that determine the magnitude and severity of these compromises.
+ Further, by exploring the impact of clinically-established therapy, as well as more experimental treatment decisions, we illustrate a more complex interplay between chemotherapy and patient immune dynamics than has been previously investigated.
+ Our results indicate that optimal chemotherapy requires identification of a “Goldilocks Window” in which treatment can both induce Park et al.
+ Page 2Cancer Res .
+ Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptcytotoxic effects in the tumor and enhance the immune response to tumor antigens.
+ Therefore, instead of the one-size-fits-all paradigm of fixed therapy regimens, patient immune biology should be a key consideration when developing personalized chemotherapy strategies.
+Materials and MethodsOverall Model DesignA central assumption of this work is that a clinically-detectable tumor has induced a tolerant state in which the immune system can no longer respond to tumor antigens.
+ Chemotherapy temporarily removes this tolerance through lymphodepletion, which eliminates Tregs and allows a burst of immune response.
+ However, the lymphodepletion itself also kills CTLs and therefore reduces the potential cytotoxic efficacy.
+ This double-edged response to chemotherapy implies that there is an optimal therapeutic strategy.
+We develop a mathematical model that includes five major populations of cells: Tumor cells (T), CTLs (E), Tregs (R), memory T cells ( M), and naïve T cells ( N).
+ Immune function is separated into two distinct temporal stages, relative to the time of application of each chemotherapy cycle: 1) a period of CTL expansion immediately following the application of chemotherapy (Figure 1, panel A); and 2) CTL contraction as tolerance returns (Figure 1, panel B).
+ The transition time between these phases remains poorly characterized, but empirically occurs 5–10 days after the expansion starts [ 16].
+ This range has been observed in murine models and is dramatic, involving over a 90% decrease in population size [ 17].
+ A central assumption of this work is that a clinically-detectable tumor has induced a tolerant state in which the immune system can no longer respond to tumor antigens.
+ Systemic lymphodepletion, including that caused by chemotherapy, can help break this tolerance.
+ This can have drastically different effects depending on the type and strength of lymphodepletion [18, 19].
+ First, chemotherapy can selectively reduce Tregs [ 20, 21, 22] helping to break peripheral tolerance.
+ Second, strong lymphodepletion will cause homeostatic proliferation in the lymphoid compartment, further reducing tolerance.
+However, dead immune cells cannot elicit cytotoxic effects or engage in homeostatic proliferation.
+ This implies that there is an optimal therapeutic strategy.
+ If the dose is too high, then the few remaining immune cells will not be able to take advantage of the tolerance breaking; if the dose is too low, then the lymphodepleting effects will be insufficient to break tolerance.
+ In addition to these immune effects, the chemotherapy itself can induce cancer cell death affecting both the tumor size directly and releasing tumor antigens, adding another layer of complexity to the tumor-immune dynamics.
+Whilst the full course of lymphocyte recoveries are not observed in the treatment course, measurements of lymphocyte populations over time have shown that a stable equilibrium is reached between chemotherapeutic depletion and population sizes [ 23].
+ Therefore, in the model, there is a window of 5 days immediately following each chemotherapy cycle in which the immune system is sensitive, and outside of these periods, it is tolerant.
+ We explore the length of this window more thoroughly below.
+Park et al.
+ Page 3Cancer Res .
+ Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptOur efforts to use mathematical modeling to inform chemotherapy build upon previous immune and personalized medicine works.
+ Mathematical models of tumor-immune activity are numerous, given the complexity of the mechanisms involved (see [ 24, 25, 26, 27, 28] for examples relevant to the present work).
+ Explained more fully below, we extend the modeling work of Robertson-Tessi et al.
+ [ 29] to a more clinically-oriented setting by simplifying the immunosuppressive dynamics while maintaining Treg recruitment and function.
+ There have been efforts to study explicit spatial dynamics of the growing cancer cell population in the context of healthy tissue [ 30, 31].
+ Here, we implement an implicit spatial limitation on growth (see explanation of f(T) below); our model may be extended in the future to incorporate explicit spatial dynamics.
+ Our initial framework choices have been to incorporate patient immune parameters to build towards a model for personalized oncology [32].
+During the phase in which the immune system is sensitive to the tumor, a few key processes occur.
+ CTLs, which target and kill the tumor, are recruited from a memory cell population due to response to tumor antigens [ 16].
+ Recent studies indicate that memory T cells make up the majority of T cells engaged in homeostatic repopulation [ 15, 33].
+ These memory cells are constantly undergoing a low level of replenishing proliferation, but they only convert to CTLs during the sensitive expansion phase following lymphodepletion.
+ During this phase, there is also tumor-mediated recruitment of Tregs.
+ This eventually causes a significant shift in immune dynamics, leading to a contraction of the CTL compartment during the tolerized phase.
+ Under tolerance, there is no longer a significant recruitment of CTLs from the memory cell compartment.
+ Instead, while the existing CTLs do carry out some tumor-killing function, the Tregs decrease the CTL number.
+Quick guide to equations and assumptionsdTdt=Tf(T)−k0TET+E1 −bRR+Ef(T) =1Ttransm− 1rTP+T1 −mrTP1PdEdt=Hto f f−t1 −M+NKmaxγαTMT+M−Ht−to f fρE1 +cRR+E+δEEdMdt=rMM1 −M+NKmax−Hto f f−t1 −M+NKmaxαTMT+M+Ht−to f fρωEdRdt=σT−δRRdNdt=rNN1 −M+NKmaxPark et al.
+ Page 4Cancer Res .
+ Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author ManuscriptOur immune tolerance model assumes that the growth of tumor cells ( T) can be checked by CTLs (E).
+ However, CTLs are themselves inhibited by Tregs ( R) that are recruited at a rate σ by tumor antigens.
+ This leads to CTL-mediated tumor cell death being moderated by the quantity of Tregs RR+E.
+ CTLs exhibit different behaviors during immune expansion and immune contraction.
+ This switching behavior is modeled with the Heaviside function Hto f f−t.
+ During the immune expansion phase, CTLs are recruited from the memory pool based on both available memory cells ( M) and the tumor burden TMT+M.
+ During immune expansion, the antigenicity of the tumor α induces differentiation to CTLs TMT+M.
+ However, as immune tolerance sets in, there is a contraction in the CTL population, caused by degradation of CTLs by Tregs b.
+ During immune contraction, CTLs can convert back to memory T cells ωE,ω<1.
+ Finally, the total remaining lymphocyte population that is not sensitive to the tumor (N) replicates in a logistic growth model rNN1−M+NKmax.
+Tumor dynamicsdTdt=Tf(T)1−k0TET+E1 −bRR+E2(1)Tumor growth dynamics (term 1) are approximated via a combination of exponential growth for smaller tumors and power law growth for larger tumors.
+ This growth model includes a few key assumptions about the limitations which a growing tumor faces before clinical detection.
+ In the absence of effector cells attacking the tumor population, tumor cells first grow exponentially but then transition to power-law growth.
+ This growth dynamic is typical of early-stage, preclinical malignant growths and is based on mathematical modeling as well as experimental observation [ 29].
+ Furthermore, there are also practical limitations to the biological validity of the tumor population sizes which the model can approximate.
+ While the model can simulate unbounded tumor growth, this is obviously clinically impossible due to the resulting morbidity and eventual patient mortality.
+ Here, we restrict the analysis to the range of tumor sizes which are typical for clinically detectable masses, namely T< 1010cells.
+ The transition between exponential and power law growth dynamics is governed by f(T) as defined in eq.
+ (2).
+Park et al.
+ Page 5Cancer Res .
+ Author manuscript; available in PMC 2020 April 15.
+Author Manuscript Author Manuscript Author Manuscript Author Manuscriptf(T) =1Ttransm− 1rTP+T1 −mrTP1P(2)The function f(T) employs the method of modeling tumor growth in [ 29].
+ Beyond a certain size (Ttrans), small tumors are not able to sustain their early exponential growth due to physical and nutrient limitations, and therefore transition to power law growth at larger tumor sizes.
+ The smoothness of this transition is governed by the exponent P.
+ The parameter rT represents the tumor growth coefficient.
+Term 2 of Equation 1 represents the tumor loss due to killing by CTLs.
+ Parameter k0 represents the CTL cytotoxic efficacy, with the actual tumor kill rate dependent upon the relative numbers of tumor and CTLs TET+E.
+ An estimate of this efficacy was initially set at 1 day−1 based on the potency of CTLs in preventing tumor growth when stimulated by multiple types of tumor antigen [ 34].
+ In vivo  killing capacities of CTLs have also been measured in the 1 – 10 day−1 range by real-time imaging in viral systems, although there is significant heterogeneity [ 35].

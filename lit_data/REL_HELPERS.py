@@ -8,6 +8,7 @@ import threading
 from func_timeout import func_timeout, FunctionTimedOut
 import traceback
 import os
+import json
 
 #from pyopenie import OpenIE5
 #extractor = OpenIE5('http://localhost:9000')
@@ -115,57 +116,51 @@ total_rows = []
 
 # New implementation using OpenIE 6
 
-def HELPER_to_extract(sent, row):# = extractors):# None):
+def HELPER_to_extract(infile_name, outfile_name, row):# = extractors):# None):
 
     print('Extractor called')
     # global total_arash
     # global total_rows
     total_rows = []
-    arash = [] # naming one var arash so the legacy lives on...
+    compendium = [] # naming one var arash so the legacy lives on...
     try:
         #results = core_NLP_client.annotate(sent)
         #results = extractor.extract(sent)
         # New implementation using OpenIE6
     
         # Call OpenIE6 on our saved files
-        os.system(f'/home/derek/anaconda3/envs/openie6/bin/python run.py --save models/oie_model --mode splitpredict --model_str bert-base-cased --task oie --gpus 0 --inp /home/derek/auto-nlp/auto-nlp-drive/text/sample_text.txt --out /home/derek/auto-nlp/auto-nlp-drive/text/predictions.txt')
+        os.system(f'/home/derek/anaconda3/envs/openie6/bin/python run.py --save models/oie_model --mode splitpredict --model_str bert-base-cased --task oie --gpus 0 --inp {infile_name} --out {outfile_name}' )
         
-        with open(openie6_json_outfile, 'r') as f:
+        results = None
+        with open(outfile_name + ".oie.json", 'r') as f:
 
-            text = f.readlines()
-
-            # Now we need to evaluate sentence by sentence
-            this_chunk_extractions = []
-            for line in text:
-                
-                if line == "\n":
-                    this_chunk_extractions = []
-                else:
-
-                    # A few tests to make sure that this line is a
-                    conf_match = re.findall(r"\d.\d\d", line)
-                    starts_with_confidence = False
-                    if len(conf_match) == 1:
-                        starts_with_confidence = True
-                    
-                    # Make sure that there's an extraction here
-                    ext_match = re.
-                    
-                    
-
-                    # This starts with a confidence.
-                    if len(match) > 0:
-                        this_confidence = float(match[0])
-                        match[0]
+            results = json.load(f)
 
 
-
+        # Iterate over the results
         for res in results:
-            for arg2 in res["extraction"]["arg2s"]:
-                arash.append([res["extraction"]["arg1"]["text"], \
-                    res["extraction"]["rel"]["text"], \
-                        arg2["text"], res["confidence"], res["extraction"]["context"], \
-                            res["extraction"]["negated"], res["extraction"]["passive"]])
+
+            this_sentence = res['sentence']
+            this_context = res['context']
+            this_extractions = res['extractions']
+
+            for ext in this_extractions:
+
+                this_confidence = ext['confidence']
+                this_arg1 = ext['arg1']
+                this_arg2 = ext['arg2']
+                this_rel = ext['rel']
+            
+                this_row = {'sentence': this_sentence,
+                            'context': this_context,
+                            'arg1': this_arg1,
+                            'rel': this_rel,
+                            'arg2': this_arg2,
+                            'confidence': this_confidence}
+                
+                compendium.append(this_row)
+
+
     except:
         return []
 
@@ -173,7 +168,7 @@ def HELPER_to_extract(sent, row):# = extractors):# None):
     #     total_arash.extend(arash)
     for i in range(len(arash)):
         total_rows.append(row)
-    return arash, total_rows
+    return compendium, total_rows
 
 
 
@@ -215,14 +210,21 @@ def OPTION1(df = None):
             if len(partial_sents) < 1:
                 continue
             else:
-                # global lock
-                # lock = threading.Lock()
-                # threads = [threading.Thread(target=HELPER_to_extract, args=(sent, row, extractor)) for (sent,row,extractor) in zip(partial_sents, partial_rows, extractors)]
-                # for t in threads: 
-                #     t.start()
-                # for t in threads:
-                #     t.join()
+                # There was some global lock threading code 
+                # here from a previous implementation that
+                # was removed on 7/29/2023?
                 try:
+
+                    # Save the sentences to disk. 
+
+                    print(partial_sents[0])
+                    with open("test_file", "w") as f:
+
+                        for thing in partial_sents[0]:
+                            f.write(thing)
+                    
+                    
+
 
                     # Here is where the money is made. This is the function that does the relationship extraction. 
                     total_arash, total_rows = HELPER_to_extract(partial_sents[0], partial_rows[0])

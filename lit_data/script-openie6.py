@@ -76,9 +76,9 @@ def approve(i):
 #
 # content = a string containing the text to be parsed
 # from_path = a data field specific to pubmed publications that has a pointer to where the plaintext 
-#             of that article is
+#  of that article is
 def retrieve_metadata(content, from_path = None):
-
+    print("Retrieve_metadata called")
     # Get the sentences
     sent_text = nltk.sent_tokenize(content)
 
@@ -180,8 +180,8 @@ def URANUS_redone(results):
 ##### celery worker code #####
 #activate the openie jar
 #os.system('java -Xmx50g -XX:+UseConcMarkSweepGC -jar ../openie-assembly.jar --httpPort 8000')
-input_dir = 'text'
-output_dir = 'processed'
+input_dir = '/home/derek/auto-nlp/auto-nlp-drive/text'
+output_dir = '/home/derek/auto-nlp/auto-nlp-drive/processed'
 
 if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -203,21 +203,32 @@ for subdir in os.listdir(directory_path):
             df_list.append(result_df)
 
 # Concatenate all DataFrames in the list into a single DataFrame
+# Specifically, these are data frames relatedt o
 dois = pd.concat(df_list, ignore_index=True)
 #dois = pd.read_csv('dois.csv', index_col='Name')
 dois= dois.set_index('Name')
 dois = dois[~dois.index.duplicated(keep='first')]
 
-for filename in os.listdir(input_dir):
+
+# Now we are taking in from input_dir which is
+# the directory 
+for filename in os.listdir(input_dir)[:1]:
     total_nodes = pd.DataFrame()
     total_edges = pd.DataFrame()
     try:
         filepath = os.path.join(input_dir, filename)
+        print(f"Filepath is: {filepath}")
+        
+        #print(type(dois.loc[filename[:-4]]['DOI']))
         with open(filepath, 'r') as file:
             data_lines = ''.join([line.strip() for line in file.readlines()])
+            print("readlines finished")
 
-        print(dois.loc[filename[:-4]]['DOI'])
-        df = retrieve_metadata(str(data_lines), dois.loc[filename[:-4]]['DOI'])#GET DOI FOR THE PAPER
+        print("DOI cols are: ")
+        print(dois.columns)
+
+        # From the data lines, get the sentences
+        df = retrieve_sentences(str(data_lines), dois.loc[filename[:-4]]['DOI'])#GET DOI FOR THE PAPER
 
         # Here is the step for calling the extraction functions
         results = kill_bill_and_get_extractions(df)

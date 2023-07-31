@@ -116,13 +116,13 @@ total_rows = []
 
 # New implementation using OpenIE 6
 
-def HELPER_to_extract(infile_name, outfile_name, row):# = extractors):# None):
-
+def openIE6_extract(infile_name):# = extractors):# None):
+    outfile_name = infile_name+ "_results"
     print('Extractor called')
     # global total_arash
     # global total_rows
     total_rows = []
-    compendium = [] # naming one var arash so the legacy lives on...
+    compendium = [] 
     try:
         #results = core_NLP_client.annotate(sent)
         #results = extractor.extract(sent)
@@ -131,6 +131,8 @@ def HELPER_to_extract(infile_name, outfile_name, row):# = extractors):# None):
         # Call OpenIE6 on our saved files
         os.system(f'/home/derek/anaconda3/envs/openie6/bin/python run.py --save models/oie_model --mode splitpredict --model_str bert-base-cased --task oie --gpus 0 --inp {infile_name} --out {outfile_name}' )
         
+
+        # Load the result as a json file
         results = None
         with open(outfile_name + ".oie.json", 'r') as f:
 
@@ -159,16 +161,12 @@ def HELPER_to_extract(infile_name, outfile_name, row):# = extractors):# None):
                             'confidence': this_confidence}
                 
                 compendium.append(this_row)
-
-
     except:
         return []
 
-    # #with lock:
-    #     total_arash.extend(arash)
-    for i in range(len(arash)):
-        total_rows.append(row)
-    return compendium, total_rows
+    compendium = pd.DataFrame(compendium)
+    
+    return compendium
 
 
 
@@ -184,16 +182,17 @@ def HELPER_rels_quick_clean(text):
     # expand appostrophes
     return text#.replace("'s","is").replace("'m","am").replace("'re","are")
 
-# Method to implement extractions(?)
-def OPTION1(df = None):
+# Method to implement extractions using OpenIE6 and format the output
+def OPTION1(df = None, sentence_fname_out):
     # global total_arash
     # global total_rows
 
-    df_new = pd.DataFrame()
-    headers = ["postnum", "sentencenum", "relnum", "arg1", "rel", "arg2", "confidence", "context", "negated", "passive"]
+    df_new = []
+    # headers = ["postnum", "sentencenum", "relnum", "arg1", "rel", "arg2", "confidence", "context", "negated", "passive"]
     partial_sents = []
     partial_rows = []
 
+    # Iterate over the sentences only keeping the ones w/o problems and preprocessing them. 
     for i, row in tqdm(df.iterrows(), total=df.shape[0]):
             
             # This does string preprocessing so it's not gigafucked from trying to adapt pdfs to text.
@@ -206,78 +205,61 @@ def OPTION1(df = None):
             partial_sents.append(sent1)
             partial_rows.append(row)
 
+    # Save it to file
+    if len(partial_sents) < 1:
+        return None
+    else:
+        with open(sentence_fname_out, 'w') as f:
 
-            if len(partial_sents) < 1:
-                continue
-            else:
-                # There was some global lock threading code 
-                # here from a previous implementation that
-                # was removed on 7/29/2023?
-                try:
-
-                    # Save the sentences to disk. 
-
-                    print(partial_sents[0])
-                    with open("test_file", "w") as f:
-
-                        for thing in partial_sents[0]:
-                            f.write(thing)
-                    
-                    
-
-
-                    # Here is where the money is made. This is the function that does the relationship extraction. 
-                    total_arash, total_rows = HELPER_to_extract(partial_sents[0], partial_rows[0])
-                    partial_sents = []
-                    partial_rows = []
-                except Exception as e:
-                    print(e)
-                    break#continue
-
-            relationships = total_arash
-            total_arash = []
-
-            for k, (rel,r) in enumerate(zip(relationships, total_rows)):
+            for parsent in partial_sents:
                 
+                f.write(f"{parsent}\n")
 
-                # This step has some ad-hocs to deal with exceptions we know of.
-                # TODO: REFACTOR in simpler terms.
-                dictionary = {}
-                if rel[0] in ["Tcell","T-cell","T-cells","Tcells","t cell","t-cell","T cell", "T cells"]:
-                    rel[0] = "T-cell"
-                if rel[2] in ["Tcell","T-cell","T-cells","Tcells","t cell","t-cell","T cell", "T cells"]:
-                    rel[2] = "T-cell"
+    # Now we do extraction
+    try:
+        # Here is where the money is made. This is the function that does the relationship extraction. 
+        result_dframe = openIE6_extract(sentence_fname_out)
+        partial_sents = []
+        partial_rows = []
+    except Exception as e:
+        print(e)
+        
+    
+
+    for i in range(len(result_dframe)):
+        
+        rel = result_dframe.iloc[i].to_dict()
+
+        # This step has some ad-hocs to deal with exceptions we know of.
+        # TODO: Implement some quality control steps (how?) here
+        dictionary = {}
+        if rel['arg1'] in ["Tcell","T-cell","T-cells","Tcells","t cell","t-cell","T cell", "T cells"]:
+            rel['arg1'] = "T-cell"
+        if rel['arg2'] in ["Tcell","T-cell","T-cells","Tcells","t cell","t-cell","T cell", "T cells"]:
+            rel['arg2'] = "T-cell"
 
 
-                # Constructing the relationships into a format that will eventually be put into a dataframe for neptune upload
-                dictionary["arg1:String"] = rel[0]
-                dictionary["rel:String"] = HELPER_rels_quick_clean(rel[1])
-                dictionary["arg2:String"] = rel[2]
-                #dictionary["context"] = sent
-                dictionary["confidence:String"] = rel[3]
-                dictionary["context_rel:String"] = rel[4]
-                dictionary["negated:String"] = rel[5]
-                dictionary["passive:String"] = rel[6]
+        # Constructing the relationships into a format that will eventually be put into a dataframe for neptune upload
+        dictionary["sentence:String"] = rel['sentence']
+        dictionary["arg1:String"] = rel['arg1']
+        dictionary["rel:String"] = HELPER_rels_quick_clean(rel['rel'])
+        dictionary["arg2:String"] = rel['arg2']
+        #dictionary["context"] = sent
+        dictionary["confidence:String"] = rel['confidence']
+        dictionary["context_rel:String"] = rel['context']
+        dictionary["negated:String"] = "None"
+        dictionary["passive:String"] = "None"
 
-                for k,v in r.items():
-                    if k not in ["text","postnum","sentencenum"]:
-                        dictionary[k] = v
-                try:        
-                    df_new = df_new.append(dictionary, ignore_index=True)
-                except Exception as e:
-                    print(e)
-                    continue
-
-            total_rows = []
-
-    #df_new = df_new.reindex(headers, axis=1)
+        df_new.append(dictionary)
+    
+    df_new = pd.DataFrame(df_new)
     return df_new
 
 
 
-def kill_bill_and_get_extractions(df):
+def get_extractions(df):
 
-    print('Kill bill called')
+    
     try:
         df_new = OPTION1(df)
     except Exception as e:

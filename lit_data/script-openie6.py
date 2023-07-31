@@ -26,6 +26,9 @@ import spacy
 from celery import Celery
 from celery.utils.log import get_task_logger
 import traceback
+from sentenceMaker import *
+
+
 
 client = boto3.client('s3',
         aws_access_key_id='AKIARLSKRVQP433MXUZG',
@@ -41,72 +44,8 @@ bucket = s3.Bucket('semantic-scholar-open-research-corpus-unzipped') #CHANGE THI
 nlp = spacy.load("en_core_sci_lg")
 nlp2 = spacy.load("en_core_web_sm")
 
-def approve(i):
-    words = i.split()
-    for word in words:
-        if word in ["Vol.","Journal","2019","2018","2020"]:
-            return False
-        if "www" in word:
-            return False
-        if ".com" in word:
-            return False
-        if ".edu" in word:
-            return False
-        if "License" in word:
-            return False
-        if "doi" in word or "ncbi" in word or "Vol." in word:
-            return False
-    if len(i) < 25:
-        return False
-    if i.count(",") > 6:
-        return False
-    if i.count(".") > 2:
-        return False
-    return True
 
-# This method takes text and then returns it as a token of sentences.
-# From the docs:
-# 
-# nltk.tokenize.sent_tokenize(text, language='english')
-#
-# Return a sentence-tokenized copy of text, using NLTK’s recommended 
-# sentence tokenizer (currently PunktSentenceTokenizer for the 
-# specified language).
-#
-#
-# content = a string containing the text to be parsed
-# from_path = a data field specific to pubmed publications that has a pointer to where the plaintext 
-#  of that article is
-def retrieve_metadata(content, from_path = None):
-    print("Retrieve_metadata called")
-    # Get the sentences
-    sent_text = nltk.sent_tokenize(content)
 
-    buffer = ""
-    text = defaultdict(list)
-
-    for count, i in enumerate(sent_text):
-        if approve(i):
-            if ":" in i:
-                sample = i.partition(":")[0]
-                if len(sample) < 20:
-                    buffer = sample
-                    i = i.replace(buffer + ":", "")
-
-            temp_context = []
-            if count > 0:
-                temp_context.append(sent_text[count-1])
-            temp_context.append(i)
-            if count < len(sent_text)-1:
-                temp_context.append(sent_text[count+1])
-            
-            text["context:String"].append(" ".join(temp_context))
-            text["sentence:String"].append(i)
-            text["tag:String"].append(buffer)
-            text["path:String"].append(from_path)  
-    
-    df = pd.DataFrame().from_dict(text)
-    return df
 
 def find_key_words(dictionary):
     doc = nlp(dictionary["sentence:String"])
@@ -178,8 +117,8 @@ def URANUS_redone(results):
 
 
 ##### celery worker code #####
-#activate the openie jar
-#os.system('java -Xmx50g -XX:+UseConcMarkSweepGC -jar ../openie-assembly.jar --httpPort 8000')
+
+
 input_dir = '/home/derek/auto-nlp/auto-nlp-drive/text'
 output_dir = '/home/derek/auto-nlp/auto-nlp-drive/processed'
 
@@ -211,7 +150,9 @@ dois = dois[~dois.index.duplicated(keep='first')]
 
 
 # Now we are taking in from input_dir which is
-# the directory 
+# the directory that has the scientific articles to be 
+# processed
+pd.set_option('display.max_columns', 999)
 for filename in os.listdir(input_dir)[:1]:
     total_nodes = pd.DataFrame()
     total_edges = pd.DataFrame()
@@ -222,16 +163,20 @@ for filename in os.listdir(input_dir)[:1]:
         #print(type(dois.loc[filename[:-4]]['DOI']))
         with open(filepath, 'r') as file:
             data_lines = ''.join([line.strip() for line in file.readlines()])
-            print("readlines finished")
+            #print("readlines finished")
 
-        print("DOI cols are: ")
-        print(dois.columns)
+        # print("DOI cols are: ")
+        # print(dois.head())
+        # print("filename is: ")
+        # print(filename)
+        article_fname = filename[:-4] # Minus the '.txt' at the end of a file, for example.
+        doi = dois.loc[dois['PDF Name'] == article_fname]['DOI']
 
         # From the data lines, get the sentences
-        df = retrieve_sentences(str(data_lines), dois.loc[filename[:-4]]['DOI'])#GET DOI FOR THE PAPER
+        df, sentence_fname = retrieve_sentences(str(data_lines), doi)
 
         # Here is the step for calling the extraction functions
-        results = kill_bill_and_get_extractions(df)
+        results = get_extractions(df)
         
         # This is to format the results
         temp_node_csv, temp_edge_csv = URANUS_redone(results)

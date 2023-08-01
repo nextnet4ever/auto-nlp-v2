@@ -1,0 +1,113 @@
+VIEWS
+356  | CANCER DISCOVERY  APRIL  2017 www.aacrjournals.org
+         IN THE SPOTLIGHT    
+ Anaphase-Promoting  Complex Adaptor FZR1/CDH1 Blocks 
+BRAF Signaling  Both by Targeting BRAF for Proteolytic Degradation and by Disrupting BRAF Dimerization   
+    Chao     Zhang     and     Gideon     Bollag    
+   Plexxikon Inc., Berkeley, California .  
+  Corresponding Author:  Gideon Bollag ,  Plexxikon Inc.,  91 Bolivar Drive, 
+Berkeley, CA 94710. Phone: 510-647-4062; Fax:  510-548-4785  ; E-mail:  gbollag@plexxikon.com   
+  doi:  10.1158/2159-8290.CD-17-0172             
+©2017 American Association for Cancer Research.           Summary:  Blocking dimerization and stimulating protein degradation are two mechanisms known to inhibit BRAF 
+activity. The study reported by Wan and colleagues identiﬁ  es BRAF as a substrate of the APC/C FZR1 –ubiqutin–
+proteasome system. The interaction between FZR1 and BRAF also induces a conformational change that disrupts BRAF dimerization. These ﬁ  ndings identify a dynamic interplay between FZR1 and BRAF with strong implications for cell-fate determination and the tumor suppressor role of FZR1. 
+Cancer Discov; 7(4); 356–8. ©2017 AACR.  
+  See related article by Wan et al., p. 424 (3).        
+ Cell-cycle control occupies a central place in the complex 
+code of regulations that govern the myriad processes inside 
+our cells. The cellular machinery that precisely orchestrates the ordered series of events leading to high ﬁ  delity chromo-
+some replication and segregation also safeguards the cells from deleterious effects that bring about catastrophes such as malignant transformation. Regulated protein degradation through ubiquitin-mediated proteolysis plays a prominent role in powering the cell-cycle clock ( 1 ). The irreversible nature of proteolysis helps ensure the directionality of cell-cycle pro-gression. Two multisubunit RING ubiquitin E3-ligases, the SKP1–CUL1–F-box-protein (SCF) complex and the anaphase-promoting complex/cyclosome (APC/C), are responsible for the ubiquitylation of many cell-cycle regulators. Unlike the SCF complex, which performs a variety of functions through-out the entire cell cycle, the APC/C is active mainly between metaphase and the end of the next G 1  phase, with its tasks temporally segregated by the two adaptor proteins CDC20 and FZR1 (CDH1). Whereas APC/C 
+CDC20  initiates the meta-
+phase–anaphase transition, APC/C FZR1  promotes exit from 
+mitosis and prevents premature entry into the S phase. A large number of mitotic regulators are degraded at the end of mitosis and kept in check by APC/C 
+FZR1 . Because APC/C FZR1  
+is required to maintain genomic stability ( 2 ), it ranks as a tumor suppressor: Loss of APC/C 
+FZR1  can cause uncontrolled 
+proliferation, genomic instability, and tumorigenesis. 
+ A new player is joining the FZR1 story (Fig. 1). FZR1 is now 
+shown to negatively regulate BRAF via two very different mech-anisms ( 3 ). It has been known for many years that the net effect of APC/C 
+FZR1  activity is typically cell-cycle progression. Now, 
+BRAF is added to the FZR1 substrate list. Furthermore, the act of binding to BRAF results in a second, non–APC/C–dependent activity: disruption of BRAF dimerization. Interestingly, BRAF is the only member of the RAF family to be targeted by FZR1—ARAF and CRAF are spared. This sheds additional light on the tumor suppressor role of FZR1 and appears consistent with loss of FZR1 function in melanoma and other cancers. And like other tumor suppressor genes, loss of FZR1 in slowly cycling cells leads to senescence. In seeking to understand the role of FZR1 in senescence, Wan and colleagues ( 3 ) note the link to BRAF whose aberrant activation is linked to melanocyte senes-cence. Indeed, activating  BRAF  mutations are often found in 
+benign nevi ( 4 ), thought to be senescent skin lesions originat-ing from melanocytes, and Wan and colleagues ﬁ  nd decreased 
+levels of FZR1 in samples of human nevi. Pursuing this thread, 
+the authors note a clear inverse correlation of FZR1 activity with BRAF protein levels. BRAF depletion depends on APC/C 
+FZR1  catalytic activity, and an FZR1 binding site was identiﬁ  ed 
+on BRAF. This so-called destruction-box (D-box) localizes to a surface loop in the BRAF catalytic domain. Discovery of a rare human cancer mutation, R671Q, in the BRAF D-box region strengthens this connection. Introduction of R671Q reduces FZR1 binding and BRAF degradation. Response to UV light provides another potentially signiﬁ  cant link between BRAF and FZR1: UV-induced mutations accelerate BRAF-dependent oncogenesis, and UV separately induces FZR1 degradation and accumulation of FZR1 substrates. 
+ Perhaps most surprising in the FZR1/BRAF story, however, 
+is a direct interference of BRAF function that is independent of APC/C. Wan and colleagues show that FZR1 can disrupt BRAF dimerization (Fig. 1). Activation of the RAS protein induces BRAF dimerization, an essential event in stimulating the MAP kinase pathway. In a cell that is dependent on BRAF dimerization for ERK phosphorylation, elevated expression of FZR1 can block BRAF signaling. Again, this depends on an intact D-box domain implying direct binding between FZR1 and BRAF. Cancer cells that are activated by the most common BRAF oncogenic mutation, V600E, do not depend on BRAF dimerization and are not affected by depletion of FZR1 (although loss of FZR1 contributes to BRAF inhibitor resistance). By contrast, in cancer cells that depend on the dimerization-dependent  BRAF  mutation G466E, depletion of 
+FZR1 enhances BRAF activity. 
+on April 6, 2017. © 2017 American Association for Cancer Research. cancerdiscovery.aacrjournals.org Downloaded from VIEWS
+ APRIL  2017  CANCER DISCOVERY  | 357  Further reﬁ  nement of FZR1 activity proceeds through 
+phosphorylation events (Fig. 1). Previous work has shown that 
+CDK-dependent phosphorylation of FZR1 disrupts the inter-action with APC/C ( 5 ). In the work currently under discus-sion, ERK-dependent phosphorylation of FZR1 causes similar loss of APC/C binding and thus prevents degradation of APC/C 
+FZR1  substrates such as BRAF. This would appear to be 
+a positive feedback effect of BRAF activation. Coinhibition of ERK activity (using a BRAF or MEK inhibitor) and CDK4 activity (using a selective inhibitor) results in synergistic unmasking of APC/C 
+FZR1  activity and lower levels of the BRAF protein. And 
+following up on the role of PTEN depletion in melanoma, Wan and colleagues also show that reduced FZR1 levels coop-erate with PTEN loss in mouse melanocytes to activate BRAF signaling  in vivo . These data support combination studies 
+with kinase inhibitors to enable the tumor-suppressive effects of FZR1. 
+ The FZR1/BRAF story may be quite relevant to mela-
+noma and other cancers. In reviewing The Cancer Genome Atlas database, Wan and colleagues note that 23% of tumors harbor mutations or deletions in  FZR1  or other APC/C 
+subunit genes, whereas 80% of tumors harbor mutations or ampliﬁ  cations of  BRAF  or  NRAS . Melanoma-derived FZR1 
+mutants show defective BRAF binding. As noted above, the most common BRAF mutants work as monomers and will not be signiﬁ  cantly affected by FZR1 mutations. Nonetheless, 
+resistance to BRAF and MEK inhibitors is often mediated by  BRAF  ampliﬁ  cation and BRAF dimerization ( 6 ), so it will be 
+important to monitor the effects of FZR1 loss on resistance 
+to targeted therapy. The same FZR1/BRAF reciprocation may play a role in many additional cancers.  Although it is not surprising that protein stability plays an 
+important part in the FZR1/BRAF story, the current speciﬁ  c 
+mechanistic link to the APC/C 
+FZR1  ubiquitin system has not 
+been anticipated in the literature. In the past, HSP90 has been shown to modulate the homeostasis of oncogenic BRAF (among a host of additional client proteins) on a more global level ( 7 ). The current study now adds a context-dependent interplay between the tumor suppressor FZR1 and the BRAF/MEK/ERK pathway, highlighting the intricacies of tumor development. The BRAF community should now include this new set of characters in its sights as better therapeutic options for patients with cancer are pursued. The plot thickens.   
+ This is the ﬁ  rst report linking BRAF to FZR1, and future 
+studies will continue to unravel the intricacy and biological impact of this dynamic connection. For example, a structural understanding of how FZR1 binding to D-box motif modu-lates the dynamics of BRAF dimerization would illuminate new ways to pharmacologically inhibit RAS/BRAF signaling. Multiple interrelated effects on FZR1 activity and BRAF func-tion are elicited by the CDK, ERK, and PI3K phosphorylation cascades. Efﬁ  cacious coinhibition of these kinase pathways 
+( 8 ) could be explained by multiple events networked to FZR1/BRAF. Furthermore, deciphering the role of FZR1/BRAF in controlling the proliferation-senescence decision will enable new approaches to cancer treatment that promote the senes-cence program in tumor cells ( 9 ). 
+  Disclosure of Potential Conﬂ  icts of Interest 
+ No potential conﬂ  icts of interest were disclosed .    
+     Published online April 3, 2017.     Figure 1.        Three interaction pathways for FZR1/BRAF: ( 1 ) FZR1-mediated degradation of BRAF , ( 2 ) FZR1-mediated disruption of BRAF dim erization, 
+and ( 3 ) downregulation of FZR1 by ERK, CDK, and AKT .    CDK4/6–CCNDFZR1Inactive
+(1) BRAF
+degradation
+SignalingActiveBRAFRAF
+FZR1 FZR1BRAF
+BRAF
+ERK
+FZR1BRAFP
+P
+Inactive
+(2) Disruption
+of dimerization
+(3) Downregulation
+of FZR1 by ERK, CDK,AKT phosphorylation 
+on April 6, 2017. © 2017 American Association for Cancer Research. cancerdiscovery.aacrjournals.org Downloaded from VIEWS
+358  | CANCER DISCOVERY  APRIL  2017 www.aacrjournals.org REFERENCES 
+  1.        Teixeira     LK   ,    Reed     SI   .  Ubiquitin ligases and cell cycle control .  Annu Rev 
+Biochem     2013 ; 82 : 387 – 414 .  
+  2.        Greil     C   ,    Krohs     J   ,    Schnerch     D   ,    Follo     M   ,    Felthaus     J   ,    Engelhardt     M   ,   et al. 
+   The role of APC/C(Cdh1) in replication stress and origin of genomic 
+instability .  Oncogene     2016 ; 35 : 3062 – 70 .  
+  3.        Wan     L   ,    Chen     M   ,    Cao     J   ,    Dai     X   ,    Yin     Q   ,    Zhang     J   ,   et al.    The APC/C E3 ligase 
+complex activator FZR1 restricts BRAF oncogenic function .  Cancer Discov     2017 ; 7 : 424 – 41 .  
+  4.        Pollock     PM   ,    Harper     UL   ,    Hansen     KS   ,    Yudt     LM   ,    Stark     M   ,    Robbins     C M   , 
+  et  al.    High frequency of BRAF mutations in nevi .  Nat Genet     2003 ; 33 : 19 – 20 .    5.        Oakes     V   ,    Wang     W   ,    Harrington     B   ,    Lee     WJ   ,    Beamish     H   ,    Chia     KM   ,   et al. 
+   Cyclin A/Cdk2 regulates Cdh1 and claspin during late S/G 2  phase of the cell cycle .  Cell Cycle     2014 ; 13 : 3302 – 11 .  
+  6.        Solit     DB   ,    Rosen     N   .  Towards a uniﬁ  ed model of RAF inhibitor resist-
+ance .  Cancer Discov     2014 ; 4 : 27 – 30 .  
+  7.        Grbovic     OM   ,    Basso     AD   ,    Sawai     A   ,    Ye     Q   ,    Friedlander     P   ,    Solit     D   ,   et al.    V600E 
+B-Raf requires the Hsp90 chaperone for stability and is degraded in response to Hsp90 inhibitors .  Proc Natl Acad Sci U S A     2006 ; 103 : 57 – 62 .  
+  8.        Lee     MS   ,    Helms     TL   ,    Feng     N   ,    Gay     J   ,    Chang     QE   ,    Tian     F   ,   et al.    Efﬁ  cacy of 
+the combination of MEK and CDK4/6 inhibitors  in vitro  and  in vivo  in 
+KRAS mutant colorectal cancer models .  Oncotarget     2016 ; 7 : 39595 – 608 .  
+  9.        Nardella     C   ,    Clohessy     JG   ,    Alimonti     A   ,    Pandolﬁ       PP   .  Pro-senescence 
+therapy for cancer treatment .  Nat Rev Cancer     2011 ; 11 : 503 – 11 .    
+on April 6, 2017. © 2017 American Association for Cancer Research. cancerdiscovery.aacrjournals.org Downloaded from 2017;7:356-358. Cancer Discov   Chao Zhang and Gideon Bollag  by Disrupting BRAF DimerizationSignaling Both by Targeting BRAF for Proteolytic Degradation and Anaphase-Promoting Complex Adaptor FZR1/CDH1 Blocks BRAF
+  Updated version
+   http://cancerdiscovery.aacrjournals.org/content/7/4/356Access the most recent version of this article at:
+    
+    
+  Cited articles
+   http://cancerdiscovery.aacrjournals.org/content/7/4/356.full.html#ref-list-1This article cites 9 articles, 3 of which you can access for free at:
+    
+  E-mail alerts  related to this article or journal. Sign up to receive free email-alerts
+  SubscriptionsReprints and 
+  . pubs@aacr.orgTo order reprints of this article or to subscribe to the journal, contact the AACR Publications Department at
+  Permissions
+  . permissions@aacr.orgTo request permission to re-use all or part of this article, contact the AACR Publications Department at
+on April 6, 2017. © 2017 American Association for Cancer Research. cancerdiscovery.aacrjournals.org Downloaded from 

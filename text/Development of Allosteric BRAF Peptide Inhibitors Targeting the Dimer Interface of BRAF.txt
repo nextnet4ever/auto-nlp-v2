@@ -1,0 +1,137 @@
+Development of Allosteric BRAF Peptide Inhibitors Targeting the Dimer Interface of 
+BRAF
+Amber Y. Gunderwala1, Anushri A. Nimbvikar1, Nicholas J. Cope1, Zhijun Li1, and Zhihong 
+Wang*,1
+1 Department of Chemistry & Biochemistry, University of the Sciences, Philadelphia, PA 19104, 
+United States
+*Corresponding Author. Email: z.wang@usciences.edu
+SUPPLEMENTARY INFORMATION
+Table S1. Top ranked peptides through PeptiDerive analysis with their relative interface scores. 
+Input Structure 
+(PDB ID)Peptide Sequences Relative Interface Score 
+(%)
+1UWH RKTRHVNILL 46.30%
+1UWH KTRHVNILL 40.29%
+1UWH CRKTRHVNILLC (cyclic peptide) 46.30%
+1UWH CLRKTRHVNILLFC (cyclic peptide) 46.30%
+3TV6 TRHVNILLFM 46.91%
+3TV6 CLRKTRHVNILLFC (cyclic peptide) 46.07%Table S2. List of peptides used in the study
+Peptide Sequence WT_IC 50 (µM) G469A_IC 50 (µM)
+1. RKTRHVNILL > 3 ND*
+2. TRHVNILLFM (braftide) 0.364 ± 0.02 0.172 ± 0.01
+3. KTRHVNILLFM 2.45 ± 0.34 0.875 ± 0.08
+4. CTRHVNILLFMC (cyclic braftide) 0.81 ± 0.09 1.09 ± 0.11
+5. GRKKRRQRRR-miniPEG-TRHVNILLFM 
+(TAT-braftide)0.043 ± 0.0007 ND
+6. THHVNILLFM 1.5 ± 0.08 2.5 ± 0.28
+7. TRHVNILLFM-Cy3 ND NDS1. Structure of the dimeric BRAFWT kinase domain (PDB:1UWH1) with the braftide sequence highlighted in 
+magenta (Left panel). The contribution of Arg509 in dimerization is illustrated by the multiple hydrogen 
+bonds between Arg509 and His477, Thr508, and Phe516 in the zoomed-in figure (Right panel).
+S2. Dose-response curves generated for indicated peptides against FL-BRAFWT/G469A. A) Curve was generated 
+through quantification of a Western Blot obtained through an in vitro kinase assay. Quantification was done with 
+Image J. B-D) Dose-response curves generated with in vitro ELISA. IC 50 values were obtained by fitting the data to a 
+4-parameter logistic equation in Origin. S3. Increased RAF expression with co-transfection of BRAF and CRAF. HEK293 cells were transiently 
+transfected with BRAF alone, CRAF alone, or BRAF/CRAF, respectively. Cell lysates were subject to 
+immunoblotting, probing for BRAF, CRAF, and Actin. S4. Co-immunoprecipitation of FLAG tagged-BRAF with MBP tagged-CRAF. HEK293 cells were transiently 
+transfected with BRAF alone, CRAF alone, or BRAF/CRAF, respectively. Cell lysates were subject to 
+immunoprecipitation with amylose resin. Immunoprecipitated samples were analyzed via SDS-PAGE and subsequent 
+immunoblotting for MBP-CRAF and BRAF-FLAG. In parallel, cell lysates were subject to SDS-PAGE and 
+immunoblotting for MBP-CRAF, BRAF-FLAG, phospho-MEK, and actin.S5. Dose-response curves for braftide at fixed concentration of Dabrafenib against BRAFWT/G469A. Dabrafenib 
+concentrations were kept below the IC 50 values for both wild type  and G469A. Dose-response curves generated with 
+in vitro ELISA. IC 50 values were obtained by fitting the data to a 4-parameter logistic equation in Origin.S6. Effect of combination treatment of TAT-braftide and vemurafenib against BRAFWT/G469A. HEK293 
+cells transiently transfected with BRAFWT/G469A were pre-treated with braftide (75 µM) for 2 hr and then 
+vemurafenib was added at the indicated concentrations for 1 hr. Cell lysates were subject to immunoblotting 
+for the indicated proteins. SUPPLEMENTAL METHODS
+Transient Transfection into Mammalian Cells 
+HEK293 cells were plated at one million cells per 2 mL DMEM supplemented with 10% FBS and 
+1% L-glutamine. These cells were incubated at 37°C with 5% CO 2 for 24 hours or until the cells 
+reach a confluency of 40-60%. DNA (1-3 μg) was mixed with PEI-MAX in a 1:3 ratio in opti-
+MEM at RT for ~25 minutes and added onto the cells with fresh media.2 After 48 hrs, the cells 
+were washed with cold PBS, harvested, lysed with 4% SDS and homogenized. For peptide assays, 
+48 hrs post-tranfection, cells were treated with TAT-Braftide/TAT control in reduced serum media 
+at the indicated concentrations for 4 hrs. The cells were then washed twice with PBS, lysed as 
+above and quantified with the BCA protein assay. Equal amounts of cell lysates were loaded for 
+immunoblotting and then probed for relevant proteins. For cell-based synergy assays, 48 hrs post-
+transfection, the cells were treated with TAT-braftide at the indicated concentration for 2 hrs. 
+Thereafter, dabrafenib or vemurafenib were added to the cells at the indicated concentrations for 
+1 hr. Cells were washed twice with PBS and processed as above. Protein concentrations were 
+determined with BCA assays for immunoblotting. 
+Full-Length BRAF and MEK Purification 
+FL-BRAFWT/G469A were expressed in HEK293F cells.3, 4 The cell culture pellet was lysed in salt 
+buffer supplemented with phosphatase and protease inhibitors, sonicated and centrifuged to obtain 
+the supernatant. The supernatant was filtered and applied to pre-equilibrated cobalt resin for 2-3 
+hrs at 4°C. Resin was washed extensively with salt buffer and the the protein was eluted off the 
+resin with an imidazole gradient. Elutions were analyzed through SDS-PAGE gels, pooled and 
+further purified through size-exclusion chromatography. Similarly, kinase-dead 6X-His/MEK-
+(K97M)/GST protein was purified from E.coli (BL21 codon plus).5 Bacterial cultures were grown 
+and induced with 0.5 mM IPTG at 16-18°C overnight.  The cell pellet was lysed in lysis buffer as 
+indicated above, sonicated and centrifuged to obtain the supernatant and incubated with 
+equilibrated cobalt resin 2-3 hours. The protein bound resin was washed with salt buffer as 
+described above. MEK1 was eluted with imidazole buffer and further purified through size-
+exclusion chromatography. Proteins were concentrated and stored at -80°C.
+B-Raf kinase domain purification
+B-Raf kinase domain was expressed in E. coli (2L culture) and the pellet was resuspended in low 
+salt buffer (50 mM HEPES, pH 8.0, 150 mM NaCl, 5% glycerol, containing 2 protease inhibitor 
+cocktail tablets and 100 mg lysozyme). The pellet was then incubated at room temperature for 1 
+hr after which it was sonicated at 30% amplitude for 60 seconds. The lysed mixture was 
+centrifuged at 18,000 rpm for 45 min. During this time, cobalt-affinity resin was equilibrated in 
+low salt buffer and the cell lysate was then incubated on the resin for 2 hrs at 4 C. After incubation, 
+the resin was washed with low salt (150 mM NaCl) and high salt (400 mM) buffers. At the last 
+wash, the buffer was switched to pH 7.4. The bound protein was eluted with a 200/400 mM 
+solution of imidazole. The protein was further purified on a size-exclusion column and then flash-
+frozen for storage.1 
+ELISA assays 
+ELISA assays were adapted from Qin et al. 2012.6 Glutathione-coated plates were conditioned in 
+HTBS buffer (25 mM HEPES pH 7.4, 140 mM NaCl, 0.05% Tween-20). The plates were 
+incubated with GST-tagged, kinase-dead, MEK (0.0025 mg mL-1) for >2 hr with shaking. Appropriate concentrations of the peptide were made and pre-incubated with BRAFWT/G469A (5 nM 
+final) full-length protein for 90 min. After 2 hr, the MEK solution was washed away and replaced 
+with an ATP kinase buffer (25 mM HEPES pH 7.4, 150 mM NaCl, 20 mM MgCl 2, 50 mM  -
+glycerol phosphate, 40 µM ATP). The BRAF/peptide mixture was then added to the ATP-cocktail 
+(1:1) and the kinase reaction was allowed to proceed for 15 min at 30°C. Thereafter, the reaction 
+mixture was washed away and sequentially incubated with the primary antibody (pMEK 
+S217/221) for 1 hr, followed by secondary antibody (anti-rabbit, LI-COR) for 1 hr. After final 
+washing steps, the chemiluminescent agent (Pierce) was added to the wells and the luminescence 
+was measured on a Biotek plate reader.
+Determination of binding affinity (K D) through Fluorescence Intensity 
+Braftide was synthesized with Cy3 fluorescent label. Cy3 dye has excitation/emission wavelengths 
+of 535/570 nm respectively and changes in braftide-cy3 fluorescence upon BRAF binding can be 
+monitored through cy3 emission.7, 8 For fluorescence intensity experiments, BRAFWT kinase 
+domain protein was used because of higher protein yields from purification compared to full-length 
+BRAF. Briefly, braftide-cy3 concentration was kept constant at 0.5 M and BRAF-KD protein 
+was titrated into the peptide (serial dilutions starting from 40 M). Titrations were done in 20 mM 
+HEPES, 150 mM NaCl and 5% glycerol buffer.  Fluorescence intensity was measured on a Tecan 
+plate reader at excitation/emission wavelengths of 535/574 for Cy3 (excitation/emission 
+bandwidth slits were set at 5 nm for both). Fluorescence measurements were corrected by 
+subtraction of background buffer scans. Fluorescence scans of protein by itself, without ligand, 
+were performed to ensure no interference from protein at Cy3 wavelengths.  Binding affinity (K D) 
+was determined by fitting the data to a one-site binding model in Origin.
+.  𝑦=(𝐵𝑚𝑎𝑥∗𝑥) ÷(𝐾+𝑥)
+Data Analysis and Statistics 
+For the dose-response curves, the inhibition data was fit to the 4-parameter logistic equation (dose-
+response fitting equation) in Origin.
+ 𝑦=𝐴1+(𝐴2―𝐴1)÷(1+ 10(𝐿𝑂𝐺𝑥0 ―𝑥)𝑝)
+Error bars are indicative of the SEM of each point, and 95% confidence intervals of the IC 50 values 
+are listed in the figure legend, as calculated using Origin.
+Western Blot band densities were quantified with ImageJ software (NIH) and normalized to the 
+loading control.
+SUPPLEMENTARY REFERENCES
+[1] Wan, P. T., Garnett, M. J., Roe, S. M., Lee, S., Niculescu-Duvaz, D., Good, V. M., Jones, C. 
+M., Marshall, C. J., Springer, C. J., Barford, D., and Marais, R. (2004) Mechanism of 
+activation of the RAF-ERK signaling pathway by oncogenic mutations of B-RAF, Cell 
+116, 855-867.
+[2] Longo, P. A., Kavran, J. M., Kim, M.-S., and Leahy, D. J. (2013) Transient mammalian cell 
+transfection with polyethylenimine (PEI), Methods in Enzymol. 529, 227-240.[3] Qiu, C., Tarrant, M. K., Boronina, T., Longo, P. A., Kavran, J. M., Cole, R. N., Cole, P. A., 
+and Leahy, D. J. (2009) In vitro enzymatic characterization of near full length EGFR in 
+activated and inhibited states, Biochemistry 48, 6624-6632.
+[4] Wang, Z., and Candelora, C. (2017) In Vitro Enzyme Kinetics Analysis of EGFR, Methods 
+Mol Biol 1487, 23-33.
+[5] Luo, C., Xie, P., and Marmorstein, R. (2008) Identification of BRAF inhibitors through in 
+silico screening, J Med Chem 51, 6121-6127.
+[6] Qin, J., Xie, P., Ventocilla, C., Zhou, G., Vultur, A., Chen, Q., Liu, Q., Herlyn, M., Winkler, 
+J., and Marmorstein, R. (2012) Identification of a novel family of BRAF(V600E) 
+inhibitors, J Med Chem 55, 5220-5230.
+[7] Pollard, T. D. (2010) A guide to simple and informative binding assays, Mol. Biol Cell 21, 
+4061-4067.
+[8] Ding, F.-X., Lee, B. K., Hauser, M., Davenport, L., Becker, J. M., and Naider, F. (2001) 
+Probing the Binding Domain of the Saccharomyces cerevisiae α-Mating Factor Receptor 
+with Fluorescent Ligands, Biochemistry 40, 1102-1108.

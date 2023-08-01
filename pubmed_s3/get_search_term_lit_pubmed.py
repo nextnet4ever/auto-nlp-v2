@@ -4,11 +4,28 @@ import boto3
 import os
 from tqdm import tqdm
 import multiprocessing as mp
+Entrez.email = "your_email@example.com"
+ # Read in the aws credentials
 
+with open('../aws_credentials.txt', 'r') as f:
+    for line in f:
+        if "aws_access_key_id" in line:
+            aws_acc_key_id = line.split("=")[1]
+        elif "aws_secret_access_key" in line:
+            aws_sec_acc_key = line.split("=")[1]
+
+s3 = boto3.resource('s3', 
+        aws_access_key_id= aws_acc_key_id,
+        aws_secret_access_key= aws_sec_acc_key
+        )
+s3client = boto3.client('s3', 
+        aws_access_key_id= aws_acc_key_id,
+        aws_secret_access_key= aws_sec_acc_key
+        )
 ### search pubmed for pubmed ids
 def search_pubmed(keywords):
     # Set the email for Entrez
-    Entrez.email = "your_email@example.com"
+    
     query = ' AND '.join(keywords)
     keywords.extend([query])#keywords.extend([query])
     keywords = [x for x in keywords if x is not None]
@@ -53,9 +70,9 @@ def get_abstract(pmids):
 def download_file(file_name):
     try:
         # download the file from the S3 bucket
-        s3.download_file(bucket_name, prefix + file_name, os.path.join('text', file_name))
+        s3client.download_file(bucket_name, prefix + file_name, os.path.join('text', file_name))
         #s3.get_object(Bucket=bucket_name, Key=prefix+file_name)
-        #print(f"File {file_name} downloaded from S3 bucket")
+        print(f"File {file_name} downloaded from S3 bucket")
         return 1
     except Exception as e:
         # if the file is not available in the S3 bucket, print the error message
@@ -63,20 +80,23 @@ def download_file(file_name):
         return 0
 
 # set up if/check statement to get type of input so I dont have to do all this commenting
-#query = ['HIV', 'AGT103-T', 'CCR5', 'CXCR4', 'CD4', 't-cell']
+query = ['HIV', 'AGT103-T', 'CCR5', 'CXCR4', 'CD4', 't-cell']
 #query = pd.read_csv('keywords_from_derek.txt').astype(str).values.tolist()
-#pubmed_ids = search_pubmed(query)
-#str_pubmed_ids = [str(pubmed_ids[i]) for i in range(len(pubmed_ids))]
+pubmed_ids = search_pubmed(query)
+str_pubmed_ids = [str(pubmed_ids[i]) for i in range(len(pubmed_ids))]
+
+print(str_pubmed_ids)
+
 
 ### code using data is for taking a list of ids and downloading, rather than using a list of keywords
-data = pd.read_csv('dereks_list.csv').astype(str).values.tolist()
+#data = pd.read_csv('dereks_list.csv').astype(str).values.tolist()
 # Convert list of lists to list of strings with commas as separators
-data = [','.join(row) for row in data]
+#data = [','.join(row) for row in data]
 
 # Convert list of strings to single string with newlines as separators
-pubmed_ids = data#','.join(data)
+#pubmed_ids = data#','.join(data)
 
-str_pubmed_ids = [str(pubmed_ids[i]) for i in range(len(pubmed_ids))]
+#str_pubmed_ids = [str(pubmed_ids[i]) for i in range(len(pubmed_ids))]
 # define the directory name
 dir_name = "text"
 
@@ -84,10 +104,9 @@ dir_name = "text"
 if not os.path.exists(dir_name):
     os.mkdir(dir_name)
 
-# create an S3 client object
-s3 = boto3.client('s3')
+
 bucket_name = 'pmc-oa-opendata'
-prefix = 'oa_comm/txt/all/'
+prefix = 'oa_noncomm/txt/all/'
 
 # define the list of file names to download
 file_list = ['PMC'+pubmed_ids[i]+'.txt' for i in range(len(pubmed_ids))]
@@ -98,6 +117,7 @@ available_count = 0
 # create a multiprocessing Pool with 4 worker processes
 with mp.Pool(processes=4) as pool:
     # map the download_file function to the file list and get a list of results
+    
     results = list(tqdm(pool.imap(download_file, file_list), total=len(file_list)))
     # Close the multiprocessing pool
     pool.close()
@@ -111,7 +131,7 @@ if available_count < 100:
     available_count = 0
     with mp.Pool(processes=8) as pool:
         # map the download_file function to the file list and get a list of results
-        results = list(tqdm(pool.imap(get_abstract, str_pubmed_ids), total=len(str_pubmed_ids)))
+        results = list(tqdm(pool.imap(get_abstract, str_pubmed_ids[:25]), total=len(str_pubmed_ids[:25])))
         # Close the multiprocessing pool
         pool.close()
         pool.join()

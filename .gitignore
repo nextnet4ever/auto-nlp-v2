@@ -18,4 +18,6 @@ models
 *tar.gz
 sentences.txt
 predictions.txt*
-.txt*
+pubmed_s3/**/*.txt
+aws_credentials.txt
+*.pdf

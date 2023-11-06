@@ -1,3 +1,9 @@
 #!/bin/bash
 
-python analyze_paper.py -n blahblahblah
+
+# Defining environment variables
+export BUCKET_NAME="pubmed-ftp-clone"
+export TXT_FILE_PATH="PMC1043859.txt"
+export PROJECT_NAME="psyched-garage-393419"
+cat $PROJECT_NAME
+python analyze_paper.py 

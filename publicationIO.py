@@ -45,13 +45,18 @@ def authenticate_implicit_with_adc(project_id="your-google-cloud-project-id"):
         print(bucket.name)
     print("Listed all storage buckets.")
 
-
+#authenticate_implicit_with_adc(project_id=os.environ.get("PROJECT_NAME"))
 
 def get_file_text(projname: str, bname: str, floc:str):
     """
         Download the article and return its raw text.
 
+
     """
+    print("Data values are: ")
+    print("PROJECT_NAME ", projname)
+    print("BUCKET_NAME ", bname)
+    print("FILE_NAME ", floc)
     # Initialize a client
     storage_client =  storage.Client(project=projname)
 
@@ -71,6 +76,14 @@ def get_file_text(projname: str, bname: str, floc:str):
     content = blob.download_as_text()
 
     return content
-def make_sentences(): 
 
-    pass
+
+def extract_info(sentences: List[str]):
+
+    """
+    Use OpenIE6 to extract information from each triplet. 
+    
+    Arguments:
+
+    sentences -- A List of sentences that, in total, comprise an article. 
+    """

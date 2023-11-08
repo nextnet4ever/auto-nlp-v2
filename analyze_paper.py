@@ -29,19 +29,10 @@ article_content = publicationIO.get_file_text(PROJECT_NAME, BUCKET_NAME, TXT_FIL
 
 type(article_content)
 
+# Step 2: Use NLTK to split the text into sentences
 
-# # Use nltk to split the text into sentences
-# sentences = sent_tokenize(content)
+sentences = sent_tokenize(article_content)
 
-# # Now `sentences` is a list where each element is a sentence from the file
-# for s in sentences:
-#     print(s)
-#     print("\n")
+# Step 3: Get triplets for each setence
 
-# print(len(sentences))
-# Step 2: Parse it into individual sentences.
-
-
-
-#authenticate_implicit_with_adc(project_id="psyched-garage-393419")
-#print(args.fname)
+triplets = publicationIO.extract_info(sentences)

@@ -13,6 +13,7 @@ import tqdm
 from google.cloud import storage
 import sys
 import os
+import subprocess
 import argparse
 from nltk.tokenize import sent_tokenize
 
@@ -78,7 +79,39 @@ def get_file_text(projname: str, bname: str, floc:str):
     return content
 
 
-def extract_info(sentences: List[str]):
+def clean_sentence(sentence: str):
+    """
+    Clean and preprocess the sentence.
+
+    """
+    clean_string = sentence.strip()
+    clean_string = clean_string.replace("\n", " ")
+    # Right now, just a placeholder
+
+    return clean_string
+
+def save_to_file(sentences: List[str], temp_fname: str):
+
+    """
+    Save the sentences to a text file with 1 sentence per line.
+
+    """
+
+    file_str = ""
+
+    for s in sentences:
+
+        clean_s = clean_sentence(s)
+
+        file_str += clean_s
+
+        file_str += "\n"
+
+    with open(temp_fname, 'w') as f:
+
+        f.write(file_str)
+
+def extract_info(temp_fname: str):
 
     """
     Use OpenIE6 to extract information from each triplet. 
@@ -87,3 +120,24 @@ def extract_info(sentences: List[str]):
 
     sentences -- A List of sentences that, in total, comprise an article. 
     """
+
+
+    
+
+    def call_other_environment(script_path, *args):
+        other_env_python = "/opt/conda/envs/openie6/bin/python"
+        result = subprocess.run([other_env_python, script_path, *args], capture_output=True, text=True)
+        return result.stdout
+
+
+    os.chdir('/root/nlp/openie6')
+    #os.system(f'conda activate openie6')
+    # os.system(f'conda deactivate')
+    # os.system(f'conda activate openie6')
+    #call_other_environment(run.py, )
+    pyloc = os.environ.get("OPENIE6_PYTHON_LOC")
+    os.system(f'{pyloc} run.py --save models/oie_model --mode splitpredict --model_str bert-base-cased --task oie --gpus 0 --inp /root/nlp/auto-nlp-v2/{temp_fname} --out /root/nlp/auto-nlp-v2/predictions.txt')
+    os.chdir("..")
+    # os.system(f'conda deactivate')
+    # os.system(f'conda activate nlp')
+    

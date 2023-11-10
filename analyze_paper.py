@@ -36,3 +36,5 @@ sentences = sent_tokenize(article_content)
 # Step 3: Get triplets for each setence
 publicationIO.save_to_file(sentences, "cleaned_" + TXT_FILE_PATH)
 triplets = publicationIO.extract_info("cleaned_" + TXT_FILE_PATH)
+
+# Step 4: Run the triplets 
